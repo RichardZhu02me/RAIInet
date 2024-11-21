@@ -12,3 +12,10 @@ Grid::Grid() {
             }
 }
 
+Link* Grid::getLink(size_t row, size_t col) {
+    return theBoard[row][col].link;
+}  
+
+Grid::Cell& Grid::getCell(size_t row, size_t col){
+    return theBoard[row][col];
+}
