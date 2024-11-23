@@ -1,16 +1,21 @@
-#ifndef player_H
-#define player_H
-
-#include "link.h"
+#ifndef PLAYER_H
+#define PLAYER_H
 #include <vector>
 #include <memory>
+#include "link.h"
+
+using namespace std;
 
 
 class Player{
-    std::vector<Link*> links;
+    vector<Link*> links;
+    int numOfDataDld = 0;
+    int numOfVirusDld = 0;
+    int playerNum;
+    int unusedAbilities;
 public:
     // currently for basic player
-    Player(std::string abilityOrder, std::string linkOrder, int number);
+    Player(string abilityOrder, string linkOrder, int number);
     ~Player();
     void download(Link* link);
 };
