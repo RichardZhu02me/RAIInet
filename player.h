@@ -8,15 +8,25 @@ using namespace std;
 
 
 class Player{
-    vector<Link*> links;
-    int numOfDataDld = 0;
-    int numOfVirusDld = 0;
+    int numOfDataDownloaded = 0;
+    int numOfVirusDownloaded = 0;
     int playerNum;
     int unusedAbilities;
 public:
     // currently for basic player
+    vector<Link*> links;
+    vector<Link*> downloaded;
     Player(string abilityOrder, string linkOrder, int number);
     ~Player();
-    void download(Link* link);
+    void dataDownload(Link* link);
+    void virusDownload(Link* link);
+    bool isWon();
+    void up();
+    void down();
+    void left();
+    void right();
+    void setLinks();
+    //setupFirewall
+    void setAbilities();
 };
 #endif
