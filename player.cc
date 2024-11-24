@@ -12,6 +12,8 @@ Player::~Player(){
  //dont know what to put in here yet
 }
 
+
+
 void Player::setLinks(string order){
     links.clear();
     if(order.size() > 16){
