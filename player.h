@@ -25,6 +25,7 @@ public:
     bool isHidden();
     void customizeLinks();
     //setupFirewall
+    void setLinks()l;
     void setAbilities();
 };
 #endif
