@@ -20,12 +20,9 @@ public:
     ~Player();
     void dataDownload(Link* link);
     void virusDownload(Link* link);
-    bool isWon();
-    void up();
-    void down();
-    void left();
-    void right();
-    void setLinks();
+    void notifyWin();
+    bool isHidden();
+    void customizeLinks();
     //setupFirewall
     void setAbilities();
 };
