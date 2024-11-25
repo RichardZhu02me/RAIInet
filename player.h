@@ -15,8 +15,9 @@ class Player{
     int unusedAbilities;
 public:
     // currently for basic player
-    vector<Link*> links;
-    vector<Link*> downloaded;
+    vector<shared_ptr<Ability>> abilities;
+    vector<shared_ptr<Link>> links;
+    vector<shared_ptr<Link>> downloaded;
     Player(string abilityOrder, string linkOrder, int number);
     ~Player();
     void dataDownload(Link* link);
