@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include "link.h"
-#included "grid.h"
+#include "grid.h"
 
 using namespace std;
 
