@@ -21,11 +21,6 @@ class Link{
         int getCol() const;
         char getId() const;
         int getType() const;
-        
-        void up();
-        void down();
-        void left();
-        void right();
 
         void isHidden();
         void isDownloaded();
