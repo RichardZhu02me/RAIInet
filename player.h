@@ -9,10 +9,9 @@ using namespace std;
 
 
 class Player{
+    int playerNum;
     int numOfDataDownloaded = 0;
     int numOfVirusDownloaded = 0;
-    int playerNum;
-    int unusedAbilities;
 public:
     // currently for basic player
     vector<shared_ptr<Ability>> abilities;
@@ -20,13 +19,12 @@ public:
     vector<shared_ptr<Link>> downloaded;
     Player(string abilityOrder, string linkOrder, int number);
     ~Player();
-    void dataDownload(Link* link);
-    void virusDownload(Link* link);
+    void download(Link* link);
     void notifyWin();
     bool isHidden();
     void customizeLinks();
     //setupFirewall
-    void setLinks()l;
+    void setLink();
     void setAbilities();
 };
 #endif
