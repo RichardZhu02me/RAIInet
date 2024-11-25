@@ -2,22 +2,64 @@
  #include <iostream>
  using namespace std;
 
-Player::Player(string abilityOrder, string linkOrder, int number) :
-playerNumber{number} {
-    setAbilities(abilityOrder);
-    setLinks(linkOrder);
+Player::Player(int number) : playerNum{number} {}
+
+Player::~Player(){}
+
+//getter functions
+int Player::getPlayerNum(){
+    return playerNum;
+}
+int Player::getNumOfDataDld(){
+    return numOfDataDld;
+}
+int Player::getNumOfVirusDld(){
+    return numOfVirusDld;
+}
+int Player::getNumOfAbLeft(){
+    return getNumOfAbLeft;
+}
+int Player::getNumFireWall(){
+    return getNumFireWall;
+}
+int Player::getNumLinkBoost(){
+    return getNumLinkBoost;
+}
+int Player::getNumDownload(){
+    return getNumDownload;
+}
+int Player::getNumPolarize(){
+    return getNumPolarize;
+}
+int Player::getNumScan(){
+    return getNumScan;
 }
 
-Player::~Player(){
- //dont know what to put in here yet
-}
+//setter functions
 
-void Player::setAbilities(string order){
-    abilities.clear();
-    if(order.size() > 5){
-        throw "You cannot have more than 5 abilities";
+
+
+void Player::download(Link* link);
+void Player::notifyWin();
+bool Player::isHidden();
+void Player::customizeLinks();
+
+void Player::setLink();
+
+void Player::setAbility(string ability){
+    if (ability == "download") {
+        numDownload += 1;
     }
-    for (unsigned int i = 0; i<order.size(); ++i) {
-        abilities.push_back(make_shared<Ability>(order[i],i+1));
+    if (ability == "linkboost") {
+        numLinkBoost += 1;
+    }
+    if (ability == "firewall") {
+        numFirewall += 1;
+    }
+    if (ability == "polarize") {
+        numPolarize += 1;
+    }
+    if (ability == "scan") {
+        numScan += 1;
     }
 }
