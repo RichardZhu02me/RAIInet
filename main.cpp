@@ -67,18 +67,23 @@ void PlayerSetup(unique_ptr<Player>& pl, char c) {
     }
 }
 
-void GridSetup() {
+void GridSetup(unique_ptr<Grid>& g, unique_ptr<Player>& p1, unique_ptr<Player>& p2) {
+    for (int i = 1; i <= 8; i++) {
+        for (int j = 1; j <= 8; j++) {
+            setCell(i, j, p1->links[j]);
+        }
+    }
     //setup cell and link connections
 }
 
 int main() {
-    Grid grid;
+    unique_ptr<Grid> grid{new Grid};
     unique_ptr<Player> p1 {new Player{1, "P1"}};
     unique_ptr<Player> p2 {new Player{2, "P2"}};
 
     PlayerSetup(p1, 'a');
     PlayerSetup(p2, 'b');
-    GridSetup(grid);
+    GridSetup(grid, p1, p2);
     p1->makeAllVisible();
 
     //command interpreter for move ability etc
