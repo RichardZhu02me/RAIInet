@@ -68,12 +68,35 @@ void PlayerSetup(unique_ptr<Player>& pl, char c) {
 }
 
 void GridSetup(unique_ptr<Grid>& g, unique_ptr<Player>& p1, unique_ptr<Player>& p2) {
-    for (int i = 1; i <= 8; i++) {
-        for (int j = 1; j <= 8; j++) {
-            setCell(i, j, p1->links[j]);
+    int row = 1;
+    for (int col = 1; col <= 8; col++) {
+        if (col != 4 && col != 5) {
+            getCell(row, col)->link = p1->link[col];
         }
     }
-    //setup cell and link connections
+    for (int col = 4; col <= 5; col++) {
+        getCell(row, col)->build->buildServer(p1);
+    }
+
+    row = 2;
+    for (int col = 4; col <= 5; col++) {
+        getCell(row, col)->link = p1->link[col];
+    }
+
+    row = 7;
+    for (int col = 4; col <= 5; col++) {
+        getCell(row, col)->link = p2->link[col];
+    }
+
+    row = 8;
+    for (int col = 1; col <= 8; col++) {
+        if (col != 4 && col != 5) {
+            getCell(row, col)->link = p2->link[col];
+        }
+    }
+    for (int col = 4; col <= 5; col++) {
+        getCell(row, col)->build->buildServer(p2);
+    }
 }
 
 int main() {
@@ -85,8 +108,16 @@ int main() {
     PlayerSetup(p2, 'b');
     GridSetup(grid, p1, p2);
     p1->makeAllVisible();
-
-    //command interpreter for move ability etc
     
+    bool p1won = false;
+    bool p2won = false;
+    bool p1turn = true;
+    while (!p1won && !p2won) {
+        //let players take turns performing actions, as long as game not over
+        //prompt command input
+        //if move, check if link exists, and move for them if so
+        //if ability, check if ability exists, and use ability for them
+    }
+
     return 0;
 }
