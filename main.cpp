@@ -5,11 +5,12 @@
 
 using namespace std;
 
-void playerSetup(Player* pl) {
-    while (pl->getNumOfAbLeft() != 5) {
+void PlayerSetup(unique_ptr<Player>& pl, char c) {
+
+    while (pl->getNumOfAbLeft() != 5) { //selects and sets up abilites of the player
         string ability;
 
-        cout << pl->name << ": You have " << pl->getNumOfAbLeft() << " abilities set!" << endl
+        cout << "P" << pl->getPlayerNum() << ": You have " << pl->getNumOfAbLeft() << " abilities set!" << endl
             << "Please input the next ability you would like you set!" << endl;
         cin >> ability;
         if (ability == "download") {
@@ -43,7 +44,31 @@ void playerSetup(Player* pl) {
                 cout << "You already have 2 " << ability << "s" << endl;
             }
         }
-    }   
+    }
+
+    char currLink = c;
+    int type;
+    int strength;
+    for (int i = 0; i < 8; i++) {
+        bool found = false;
+        for (auto link : pl->links) {
+            if (link->getType() == type && link->getStrength() == strength) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            pl->setLink(currLink, type, strength, pl);
+            c++;
+        } else {
+            cout << "Invalid input, please try again!" << endl;
+            i--;
+        }
+    }
+}
+
+void GridSetup() {
+    //setup cell and link connections
 }
 
 int main() {
@@ -51,8 +76,12 @@ int main() {
     unique_ptr<Player> p1 {new Player{1, "P1"}};
     unique_ptr<Player> p2 {new Player{2, "P2"}};
 
-    PlayerSetup(p1);
-    PlayerSetup(p2);
+    PlayerSetup(p1, 'a');
+    PlayerSetup(p2, 'b');
+    GridSetup(grid);
+    p1->makeAllVisible();
+
+    //command interpreter for move ability etc
     
     return 0;
 }
