@@ -36,10 +36,10 @@ public:
     int getNumScan();
 
     //setter functions
-    int setPlayerNum();
-    int setNumOfDataDld();
-    int setNumOfVirusDld();
-    int setNumOfAbLeft();
+    int setPlayerNum(int x);
+    int addNumOfDataDld();
+    int addNumOfVirusDld();
+    int setNumOfAbLeft(int x);
 
     void download(Link* link);
     void notifyWin();

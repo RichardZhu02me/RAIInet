@@ -36,8 +36,18 @@ int Player::getNumScan(){
 }
 
 //setter functions
-
-
+int Player::setPlayerNum(int x){
+    return playerNum = x;
+}
+int Player::addNumOfDataDld(){
+    return numOfDataDld += 1;
+}
+int Player::addNumOfVirusDld(){
+    return numOfVirusDld += 1;
+}
+int Player::setNumOfAbLeft(int x){
+    return numOfAbLeft = x;
+}
 
 void Player::download(Link* link);
 void Player::notifyWin();
