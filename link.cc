@@ -3,6 +3,8 @@
 
 Link::Link(const std::string& type, int strength) : type(type), strength(strength), revealed(false) {}
 
+Link::~Link(){}
+
 bool Link::fightWon(const Link& opponent) const {
     return (strength > opponent.strength) || (strength == opponent.strength && type == "data");
 }

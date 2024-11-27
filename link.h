@@ -11,6 +11,7 @@ class Link {
 
 public:
     Link(const std::string& type, int strength);
+    ~Link();
     bool fightWon(const Link& opponent) const;
     void changeType();
     bool isRevealed() const;

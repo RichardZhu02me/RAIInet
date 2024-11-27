@@ -8,12 +8,14 @@
 
 class Player {
     std::vector<std::unique_ptr<Link>> links;
+    int playerNum;
     int downloadedData;
     int downloadedViruses;
     int availableAbilities;
 
 public:
-    Player();
+    Player(int number);
+    ~Player();
     void notifyWin() const;
     void download(bool isData);
     bool isHidden(int linkIndex) const;
