@@ -1,21 +1,38 @@
 #include <iostream>
 #include <sstream>
 #include "game.h"
+#include <map>
+#include <typeinfo> 
+#include "linkboost.h"
+#include "firewall.h"
+#include "download.h"
+#include "polarize.h"
+#include "scan.h"
 
 using namespace std;
 
 const int Game::BOARD_SIZE = 8;
 const int Game::MAX_PLAYERS = 2;
 const int Game::MAX_LINK_DISTANCE = 2;
-const vector<string> Game::ABILITIES = {"linkboost","firewall","download","polarity","scan"};
+const map<string,string> Game::ABILITIES = {
+    {"linkboost", typeid(LinkBoost).name()},
+    {"firewall", typeid(Firewall).name()},
+    {"download", typeid(Download).name()},
+    {"polarity", typeid(Polarize).name()},
+    {"scan", typeid(Scan).name()}
+};
 
 Game::Game() {
-            theBoard = vector<vector<Cell>>(BOARD_SIZE, vector<Cell>(BOARD_SIZE));
-            for (int i = 0; i < BOARD_SIZE; i++) {
-                for (int j = 0; j < BOARD_SIZE; j++) {
-                    theBoard[i][j].link = nullptr;
-                }
-             }
+    theBoard = vector<vector<Cell>>(BOARD_SIZE, vector<Cell>(BOARD_SIZE));
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            theBoard[i][j].link = nullptr;
+        }
+    }
+    gameOver = false;
+    playerTurn = 0;
+    playerCastedAbility = false;
+    playerMovedLink = false;
 }
 
 Link* Game::getLink(size_t row, size_t col) {
@@ -28,9 +45,12 @@ Game::Cell& Game::getCell(size_t row, size_t col){
 
 bool Game::castAbility(string ability, Cell& target) {
     //check if current player has the ability
-    Ability* a = players[playerTurn]->getAbility(ability);
+    Ability* a = players[playerTurn]->getAbility(Game::ABILITIES.at(ability));
     if(a != nullptr) {
-        return a->cast(*players[playerTurn], target);
+        if (a->cast(*players[playerTurn], target)) {
+            players[playerTurn]->removeAbility(a);
+            return true;
+        }
     }
     return false;
 }
@@ -80,6 +100,16 @@ void Game::endTurn() {
     playerCastedAbility = false;
 }
 
+void Game::win(int playerNum) {
+    cout << "Player " << playerNum << " wins!" << endl;
+    gameOver = true;
+}
+
+void Game::loss(int playerNum) {
+    cout << "Player " << (playerNum%(players.size()-1))+1 << " wins!" << endl;
+    gameOver = true;
+}
+
 void Game::runCommand(string command) {
     stringstream ss(command);
     string action;
@@ -98,7 +128,9 @@ void Game::runCommand(string command) {
         ss >> abilityName;
         int x, y;
         ss >> x >> y;
-        castAbility(abilityName, getCell(x, y));
+        if (castAbility(abilityName, getCell(x, y))) {
+            playerCastedAbility = true;
+        }
     }
     else {
         cout << "Invalid command" << endl;

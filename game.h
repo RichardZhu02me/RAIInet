@@ -12,7 +12,7 @@ public:
     static const int BOARD_SIZE;
     static const int MAX_PLAYERS;
     static const int MAX_LINK_DISTANCE;
-    static const vector<string> ABILITIES;
+    static const map<string, string> ABILITIES;
     class Build {
         Player* player;
         string structureName;
@@ -40,12 +40,15 @@ public:
     void removeLink(Cell& target);
     void endTurn();
     Player* getPlayer(int playerNum);
+    void win(int playerNum);
+    void loss(int playerNum);
 private:
    vector<vector<Cell>> theBoard;
    vector<unique_ptr<Player>> players;
    int playerTurn;
    bool playerCastedAbility;
    bool playerMovedLink;
+   bool gameOver;
 };
 
 #endif

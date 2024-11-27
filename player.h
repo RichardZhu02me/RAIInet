@@ -9,15 +9,18 @@
 
 class Player {
     std::vector<std::unique_ptr<Link>> links;
+    std::vector<std::unique_ptr<Ability>> abilities;
     int playerNum;
     int downloadedData;
     int downloadedViruses;
     int availableAbilities;
+    Game* game;
 
 public:
     Player(int number);
     ~Player();
     void notifyWin() const;
+    void notifyLoss() const;
     void download(bool isData);
     bool isHidden(int linkIndex) const;
     void customizeLinks(const std::vector<std::string>& linkDescriptions);
@@ -29,6 +32,7 @@ public:
     int addNumOfVirusDld();
 
     Ability* getAbility(string ability);
+    void removeAbility(Ability* ability);
     void addAbility(string ability);
     void setLink(char type, int strength, int id);
 };

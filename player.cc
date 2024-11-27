@@ -7,8 +7,12 @@ Player::Player(int number) : downloadedData{0},downloadedViruses{0},availableAbi
 Player::~Player(){}
 
 void Player::notifyWin() const {
+    game->win(playerNum);
+}
+
+void Player::notifyLoss() const {
     //fix
-    std::cout << "Player wins!" << std::endl;
+    game->loss(playerNum);
 }
 
 void Player::download(bool isData) {
@@ -58,6 +62,24 @@ int Player::addNumOfDataDld(){
 
 int Player::addNumOfVirusDld(){
     return downloadedViruses += 1;
+}
+
+Ability* Player::getAbility(string ability) {
+    for (auto& a : abilities) {
+        if (typeid(*a).name() == ability) {
+            return a.get();
+        }
+    }
+    return nullptr;
+}
+
+void Player::removeAbility(Ability* ability) {
+    for (auto& a : abilities) {
+        if (a.get() == ability) {
+            abilities.erase(std::remove(abilities.begin(), abilities.end(), a), abilities.end());
+            break;
+        }
+    }
 }
 /*
 //getter functions
