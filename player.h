@@ -29,6 +29,8 @@ public:
     int addNumOfVirusDld();
 
     Ability* getAbility(string ability);
+    void addAbility(string ability);
+    void setLink(char type, int strength, int id);
 };
 
 #endif // PLAYER_H

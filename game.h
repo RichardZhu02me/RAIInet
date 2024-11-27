@@ -39,7 +39,7 @@ public:
     bool moveLink(int x, int y, char direction);
     void removeLink(Cell& target);
     void endTurn();
-
+    Player* getPlayer(int playerNum);
 private:
    vector<vector<Cell>> theBoard;
    vector<unique_ptr<Player>> players;

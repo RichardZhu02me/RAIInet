@@ -45,19 +45,19 @@ int Player::getPlayerNum(){
 }
 
 int Player::getNumOfDataDld(){
-    return numOfDataDld;
+    return downloadedData;
 }
 
 int Player::getNumOfVirusDld(){
-    return numOfVirusDld;
+    return downloadedViruses;
 }
 
 int Player::addNumOfDataDld(){
-    return numOfDataDld += 1;
+    return downloadedData += 1;
 }
 
 int Player::addNumOfVirusDld(){
-    return numOfVirusDld += 1;
+    return downloadedViruses += 1;
 }
 /*
 //getter functions

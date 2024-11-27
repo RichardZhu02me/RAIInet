@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include "grid.h"
+#include "game.h"
 #include <string>
 #include <algorithm>
 #include <random>
@@ -9,15 +9,15 @@
 
 using namespace std;
 
-void abilitySetup(unique_ptr<Game>& g, int playerNum, string abilities) {
-    unique_ptr<Player> pl = g->players[playerNum];
+void abilitySetup(unique_ptr<Game>& g, int playerNum, vector<string> abilities) {
+    unique_ptr<Player> pl = g->getPlayer(playerNum);
     for (int i = 0; i < 5; i++) {
-        pl->setAbility(abilities[i]);
+        pl->addAbility(abilities[i]);
     }
 }
 
 void linkSetup(unique_ptr<Game>& g, int playerNum, string linkFile) {
-    unique_ptr<Player> pl = g->players[playerNum];
+    unique_ptr<Player> pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
     for (int id = 0; id < 8; id++) {
@@ -28,8 +28,8 @@ void linkSetup(unique_ptr<Game>& g, int playerNum, string linkFile) {
     }
 }
 
-void linkSetupRandom(unique_ptr<Game>& g, int playerNum) {
-    unique_ptr<Player> pl = g->players[playerNum];
+void linkSetupRandom(Game& g, int playerNum) {
+    Player* pl = g.getPlayer(playerNum);
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
     mt19937 gen(rd());
