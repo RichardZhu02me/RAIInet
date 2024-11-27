@@ -11,8 +11,8 @@ using namespace std;
 //Player can set up their 5 abilities
 void abilitySetup(unique_ptr<Game>& g, size_t playerNum, vector<string> abilities) {
     Player* pl = g->getPlayer(playerNum);
-    for (int i = 0; i < 5; i++) {
-        pl->addAbility(abilities[i]);
+    for (size i = 0; i < 5; i++) {
+        pl->addAbility(abilities[i], i);
     }
 }
 

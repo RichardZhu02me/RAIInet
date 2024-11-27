@@ -35,7 +35,7 @@ public:
     Link* getPlLink(size_t id);
     Ability* getAbility(string ability);
     void removeAbility(Ability* ability);
-    void addAbility(string ability);
+    void addAbility(string ability, size_t id);
     void setLink(char type, int strength, char symbol);
 };
 
