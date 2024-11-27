@@ -32,6 +32,7 @@ public:
     int addNumOfDataDld();
     int addNumOfVirusDld();
 
+    Link* getPlLink(size_t id);
     Ability* getAbility(string ability);
     void removeAbility(Ability* ability);
     void addAbility(string ability);

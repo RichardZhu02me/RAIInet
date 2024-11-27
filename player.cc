@@ -68,6 +68,10 @@ int Player::addNumOfVirusDld(){
     return downloadedViruses += 1;
 }
 
+Link* Player::getPlLink(size_t id) {
+    return links[id];
+}
+
 Ability* Player::getAbility(string ability) {
     for (auto& a : abilities) {
         if (typeid(*a).name() == ability) {

@@ -20,7 +20,7 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
     Player* pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
-    
+
     if (playerNum == 1) char base = 'a';
     else char base = 'A';
 
@@ -138,6 +138,7 @@ int main(int argc, char* argv[]) {
     }
 
     gridSetup(g);
+    g->attach(&g)
     g->runGame();
 
     return 0;
