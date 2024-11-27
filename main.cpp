@@ -1,12 +1,12 @@
 #include <vector>
-#include "grid.h"
+#include "game.h"
 #include "player.h"
 
 using namespace std;
 
 int main() {
-    Grid grid;
-
+    Game game;
+    // game.run();
 
     return 0;
 }

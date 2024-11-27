@@ -1,6 +1,6 @@
 #include "polarize.h"
 
-bool Polarize::Effect(Player& player, Grid::Cell& target) {
+bool Polarize::Effect(Player& player, Game::Cell& target) {
     if (target.link == nullptr) {
         return false;
     }

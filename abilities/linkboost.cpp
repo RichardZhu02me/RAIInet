@@ -1,6 +1,6 @@
 #include "linkboost.h"
 
-bool LinkBoost::Effect(Player& player, Grid::Cell& target) {
+bool LinkBoost::Effect(Player& player, Game::Cell& target) {
     if (target.link == nullptr) {
         return false;
     }

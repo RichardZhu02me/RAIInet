@@ -1,7 +1,7 @@
 #include "firewall.h"
 
 
-bool Firewall::Effect(Player& player, Grid::Cell& target) {
+bool Firewall::Effect(Player& player, Game::Cell& target) {
     if (target.link != nullptr) {
         return false;
     }
@@ -10,6 +10,6 @@ bool Firewall::Effect(Player& player, Grid::Cell& target) {
         return false;
     }
     //set the build on the cell
-    target.build = Grid::Build::buildFirewall(player);
+    target.build = Game::Build::buildFirewall(player);
     return true;
 }

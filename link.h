@@ -14,6 +14,7 @@ class Link{
         void polarize();
         void hide();
         void reveal();
+        int getTravelDistance() const;
         Player* getOwner() const;
 };
 #endif

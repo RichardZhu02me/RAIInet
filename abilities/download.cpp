@@ -1,7 +1,7 @@
 #include "download.h"
 
 
-bool Download::Effect(Player& player, Grid::Cell& target) {
+bool Download::Effect(Player& player, Game::Cell& target) {
     if (target.link == nullptr) {
         return false;
     }

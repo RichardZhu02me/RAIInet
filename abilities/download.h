@@ -4,7 +4,7 @@
 #include "../ability.h"
 
 class Download: public Ability {
-    virtual bool Effect(Player& player, Grid::Cell& target) override;
+    virtual bool Effect(Player& player, Game::Cell& target) override;
 public:
 };
 

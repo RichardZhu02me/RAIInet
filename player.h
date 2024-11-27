@@ -8,5 +8,6 @@ class Player{
     std::vector<Link*> links;
 public:
     void download(Link* link);
+    Ability* getAbility(string ability);
 };
 #endif
