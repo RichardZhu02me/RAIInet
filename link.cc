@@ -47,6 +47,19 @@ int Link::getTravelDistance() const {
     return travelDistance;
 }
 
+size_t Link::getX() const {
+    return col;
+}
+
+size_t Link::getY() const {
+    return row;
+}
+
+void setCoord(size_t y, size_t x) {
+    row = y;
+    col = x;
+}
+
 void Link::weaken(int amount) {
     strength -= strength - amount < 0 ? 0 : strength - amount;
 }
