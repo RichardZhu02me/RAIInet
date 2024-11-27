@@ -1,52 +1,30 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+
+#include "Link.h"
 #include <vector>
 #include <memory>
-#include "link.h"
-#include "grid.h"
+#include <string>
 
-using namespace std;
+class Player {
+    std::vector<std::unique_ptr<Link>> links;
+    int downloadedData;
+    int downloadedViruses;
+    int availableAbilities;
 
-
-class Player{
-    int playerNum;
-    int numOfDataDld = 0; //number of data downloaded
-    int numOfVirusDld = 0; //number of virus downloaded
-    int numOfAbLeft = 0; //number of abilities left
-    int numFireWall = 0;
-    int numLinkBoost = 0;
-    int numDownload = 0;
-    int numPolarize = 0;
-    int numScan = 0;
 public:
-    // currently for basic player
-    vector<shared_ptr<Link>> links;
-    Player(int number);
-    ~Player();
-
-    //getter functions
+    Player();
+    void notifyWin() const;
+    void download(bool isData);
+    bool isHidden(int linkIndex) const;
+    void customizeLinks(const std::vector<std::string>& linkDescriptions);
+    const std::vector<std::unique_ptr<Link>>& getLinks() const;
     int getPlayerNum();
     int getNumOfDataDld();
     int getNumOfVirusDld();
-    int getNumOfAbLeft();
-    int getNumFireWall();
-    int getNumLinkBoost();
-    int getNumDownload();
-    int getNumPolarize();
-    int getNumScan();
-
-    //setter functions
-    int setPlayerNum(int x);
     int addNumOfDataDld();
     int addNumOfVirusDld();
-    int setNumOfAbLeft(int x);
 
-    void download(Link* link);
-    void notifyWin();
-    bool isHidden();
-    void customizeLinks();
-    //setupFirewall
-    void setLink();
-    void setAbilities(string ability);
 };
-#endif
+
+#endif // PLAYER_H

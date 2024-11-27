@@ -2,10 +2,64 @@
  #include <iostream>
  using namespace std;
 
-Player::Player(int number) : playerNum{number} {}
+Player::Player(int number) : downloadedData{0},downloadedViruses{0},availableAbilities{0},playerNum{number} {}
 
 Player::~Player(){}
 
+void Player::notifyWin() const {
+    //fix
+    std::cout << "Player wins!" << std::endl;
+}
+
+void Player::download(bool isData) {
+    if (isData) {
+        downloadedData++;
+    } else {
+        downloadedViruses++;
+    }
+}
+
+bool Player::isHidden(int linkIndex) const {
+    if (linkIndex < 0 || linkIndex >= static_cast<int>(links.size())) {
+        return false;
+    }
+    return !links[linkIndex]->isRevealed();
+}
+
+void Player::customizeLinks(const std::vector<std::string>& linkDescriptions) {
+    links.clear();
+    for (const auto& desc : linkDescriptions) {
+        char type = desc[0];
+        int strength = desc[1] - '0';
+        std::string linkType = (type == 'D') ? "data" : "virus";
+        links.emplace_back(std::make_unique<Link>(linkType, strength));
+    }
+}
+
+const std::vector<std::unique_ptr<Link>>& Player::getLinks() const {
+    return links;
+}
+
+int Player::getPlayerNum(){
+    return playerNum;
+}
+
+int Player::getNumOfDataDld(){
+    return numOfDataDld;
+}
+
+int Player::getNumOfVirusDld(){
+    return numOfVirusDld;
+}
+
+int Player::addNumOfDataDld(){
+    return numOfDataDld += 1;
+}
+
+int Player::addNumOfVirusDld(){
+    return numOfVirusDld += 1;
+}
+/*
 //getter functions
 int Player::getPlayerNum(){
     return playerNum;
@@ -73,3 +127,4 @@ void Player::setAbility(string ability){
         numScan += 1;
     }
 }
+*/
