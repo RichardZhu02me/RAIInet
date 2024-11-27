@@ -10,10 +10,11 @@ class Link {
     int travelDistance;
     int strength;
     bool revealed;
+    char symbol;
     Player* owner;
 
 public:
-    Link(const std::string& type, int strength, Player* owner);
+    Link(const std::string& type, int strength, char symbol, Player* owner);
     ~Link();
     bool fightWon(const Link& opponent) const;
     void changeType();
@@ -22,6 +23,7 @@ public:
     const std::string& getType() const;
     int getStrength() const;
     int getTravelDistance() const;
+    char getSymbol() const;
     Player* getOwner() const;
     bool boost();
 

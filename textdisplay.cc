@@ -25,12 +25,12 @@ void TextDisplay::notify() {
 
     cout << "========";
 
-    for (size_t) row = 0; row < 8; row++) {
+    for (size_t row = 0; row < 8; row++) {
         for (size_t col = 0; col < 8; col++) {
-            if (g->getCell()
+            cout << g->getState(row, col);
         }
+        cout << endl;
     }
-    //output what's in cells, use getState of some sort, figure out tomorrow
 
     cout << "========";
 

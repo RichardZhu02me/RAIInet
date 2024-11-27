@@ -35,7 +35,7 @@ public:
     Ability* getAbility(string ability);
     void removeAbility(Ability* ability);
     void addAbility(string ability);
-    void setLink(char type, int strength, int id);
+    void setLink(char type, int strength, char symbol);
 };
 
 #endif // PLAYER_H

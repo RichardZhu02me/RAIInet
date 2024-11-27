@@ -8,6 +8,7 @@
 #include "download.h"
 #include "polarize.h"
 #include "scan.h"
+#include "subject.h"
 
 using namespace std;
 
@@ -41,6 +42,24 @@ Link* Game::getLink(size_t row, size_t col) {
 
 Game::Cell& Game::getCell(size_t row, size_t col){
     return theBoard[row][col];
+}
+
+char Game::getState(size_t row, size_t col) {
+    if (getCell(row, col)->firewall) {
+        if (getCell(row, col)->build->getPlayer()->getPlayerNum() == 1) {
+            return 'm';
+        } else {
+            return 'w';
+        }
+    } else if (getCell(row, col)->server) {
+        return 'S';
+    } else {
+        if (g->getCell(row, col)->link == nullptr) {
+            return ' ';
+        } else {
+            return getCell(row,col)->link->getSymbol();
+        }
+    }
 }
 
 bool Game::castAbility(string ability, Cell& target) {

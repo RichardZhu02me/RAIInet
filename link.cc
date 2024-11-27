@@ -1,7 +1,8 @@
 // Link.cc
 #include "link.h"
 
-Link::Link(const std::string& type, int strength, Player* owner) : type(type), strength(strength), revealed(false), owner(owner), travelDistance(1) {}
+Link::Link(const std::string& type, int strength, char symbol, Player* owner) :
+    type(type), strength(strength), revealed(false), symbol(symbol), owner(owner), travelDistance(1) {}
 
 Link::~Link(){}
 
@@ -27,6 +28,10 @@ const std::string& Link::getType() const {
 
 int Link::getStrength() const {
     return strength;
+}
+
+char Link::getSymbol() const {
+    return symbol;
 }
 
 Player* Link::getOwner() const {

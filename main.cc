@@ -10,26 +10,30 @@
 using namespace std;
 
 void abilitySetup(unique_ptr<Game>& g, size_t playerNum, vector<string> abilities) {
-    unique_ptr<Player> pl = g->getPlayer(playerNum);
+    Player* pl = g->getPlayer(playerNum);
     for (int i = 0; i < 5; i++) {
         pl->addAbility(abilities[i]);
     }
 }
 
 void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
-    unique_ptr<Player> pl = g->getPlayer(playerNum);
+    Player* pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
+    
+    if (playerNum == 1) char base = 'a';
+    else char base = 'A';
+
     for (int id = 0; id < 8; id++) {
         inputFile >> word;
         char type = word[0];
         int strength = word[1] - '0';
-        pl->setLink(type, strength, id);
+        pl->setLink(type, strength, (base + id));
     }
 }
 
 void linkSetupRandom(Game& g, size_t playerNum) {
-    Player* pl = g.getPlayer(playerNum);
+    Player* pl = g->getPlayer(playerNum);
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
     mt19937 gen(rd());
@@ -44,10 +48,13 @@ void linkSetupRandom(Game& g, size_t playerNum) {
 }
 
 void gridSetup(unique_ptr<Game>& g) {
+    Player* p1 = g->getPlayer(1);
+    Player* p2 = g->getPlayer(2);
+
     size_t row = 1;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
-            g->getCell(row, col)->link = g->p1->link[col];
+            g->getCell(row, col)->link = p1->link[col];
         }
     }
     for (size_t col = 4; col <= 5; col++) {
@@ -56,18 +63,18 @@ void gridSetup(unique_ptr<Game>& g) {
 
     row = 2;
     for (size_t col = 4; col <= 5; col++) {
-        g->getCell(row, col)->link = g->p1->link[col];
+        g->getCell(row, col)->link = p1->link[col];
     }
 
     row = 7;
     for (size_t col = 4; col <= 5; col++) {
-        g->getCell(row, col)->link = g->p2->link[col];
+        g->getCell(row, col)->link = p2->link[col];
     }
 
     row = 8;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
-            g->getCell(row, col)->link = g->p2->link[col];
+            g->getCell(row, col)->link = p2->link[col];
         }
     }
     for (size_t col = 4; col <= 5; col++) {

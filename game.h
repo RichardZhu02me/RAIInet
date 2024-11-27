@@ -5,9 +5,10 @@
 #include "link.h"
 #include "player.h"
 #include "ability.h"
+#include "subject.h"
 using namespace std;
 
-class Game {
+class Game : public Subject{
 public:
     static const int BOARD_SIZE;
     static const int MAX_PLAYERS;
@@ -33,6 +34,8 @@ public:
     Link* getLink(size_t row, size_t col);
     //get the cell at the given row and column
     Cell& getCell(size_t row, size_t col);
+
+    char getState(size_t row, size_t col) override;
 
     void runCommand(string command);
     bool castAbility(string ability, Cell& target);
