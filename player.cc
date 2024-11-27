@@ -40,6 +40,15 @@ void Player::customizeLinks(const std::vector<std::string>& linkDescriptions) {
     }
 }
 
+void Player::setLink(char type, int strength, char symbol) {
+    std::string linkType = (type == 'D') ? "data" : "virus";
+    links.emplace_back(std::make_unique<Link>(linkType, strength, symbol, this));
+}
+
+void Player::addAbility(const std::string& ability) {
+    abilities.push_back(ability);
+}
+
 const std::vector<std::unique_ptr<Link>>& Player::getLinks() const {
     return links;
 }
