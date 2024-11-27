@@ -6,7 +6,7 @@
 #include <iostream>
 
 class TextDisplay : public Observer {
-    unique_ptr<Game> g;
+    Game* g;
 
  public:
     TextDisplay(unique_ptr<Game> g);

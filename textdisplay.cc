@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TextDisplay::TextDisplay(unique_ptr<Game> g)
+TextDisplay::TextDisplay(Game* g)
     : g{g} {}
 
 void TextDisplay::notify() {
@@ -49,4 +49,3 @@ void TextDisplay::notify() {
 }
 
   TextDisplay::~TextDisplay() {}
-  
