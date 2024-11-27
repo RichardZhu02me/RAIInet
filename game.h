@@ -31,13 +31,14 @@ public:
     };
     Game();
 
-    Link* getLink(size_t row, size_t col);
+    Link* getLink(char l);
     //get the cell at the given row and column
     Cell& getCell(size_t row, size_t col);
 
     char getState(size_t row, size_t col) override;
 
     void runCommand(string command);
+    void runGame();
     bool castAbility(string ability, Cell& target);
     bool moveLink(int x, int y, char direction);
     void removeLink(Cell& target);

@@ -8,6 +8,7 @@
 #include "download.h"
 #include "polarize.h"
 #include "scan.h"
+#include "link.h"
 #include "subject.h"
 
 using namespace std;
@@ -36,7 +37,12 @@ Game::Game() {
     playerMovedLink = false;
 }
 
-Link* Game::getLink(size_t row, size_t col) {
+Link* Game::getLink(char l) {
+    if ( l > 'a' && l < 'g') {
+        getPlayer(1)->getPlLink(l -'a');
+    } else if ( l > 'A' && l < 'G') {
+        getPlayer(2)->getPlLink(l - 'A');
+    }
     return theBoard[row][col].link;
 }  
 
@@ -73,8 +79,7 @@ bool Game::castAbility(string ability, Cell& target) {
     }
     return false;
 }
-bool Game::moveLink(int x, int y, char direction) {
-    Link* linkRef = theBoard[x][y].link;
+bool Game::moveLink(Link* linkRef, char direction) {
     int travelDistance = linkRef->getTravelDistance();
     switch(direction) {
         case 'u':
@@ -117,6 +122,7 @@ void Game::endTurn() {
     playerTurn++;
     playerTurn %= players.size();
     playerCastedAbility = false;
+    playerMovedLink = true;
 }
 
 void Game::win(int playerNum) {
@@ -136,9 +142,13 @@ void Game::runCommand(string command) {
     if(action == "move") {
         char direction;
         ss >> direction;
-        int x, y;
-        ss >> x >> y;
-        if (moveLink(x, y, direction)) {
+        char l;
+        ss >> l;
+        Link* linkRef = getLink(l);
+
+        int x = 
+        int y = 
+        if (moveLink(x, y, linkRef, direction)) {
             Game::endTurn();
         }
     }
@@ -150,8 +160,17 @@ void Game::runCommand(string command) {
         if (castAbility(abilityName, getCell(x, y))) {
             playerCastedAbility = true;
         }
-    }
-    else {
-        cout << "Invalid command" << endl;
+    } else if(action == )
+}
+
+void Game::runGame() {
+    while (!gameOver) {
+        while(!playerMovedLink) {
+            string command;
+            getline(cin, command);
+            runCommand(command);
+        }
+        playerMovedLink == false;
+        notifyObservers();
     }
 }
