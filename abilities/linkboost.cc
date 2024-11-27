@@ -12,5 +12,5 @@ bool LinkBoost::Effect(Player& player, Game::Cell& target) {
 } 
 
 string LinkBoost::getName() {
-    return "Linkboost";
+    return "linkboost";
 }

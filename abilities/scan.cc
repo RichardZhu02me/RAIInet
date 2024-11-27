@@ -14,5 +14,5 @@ bool Scan::Effect(Player& player, Game::Cell& target) {
 }
 
 string Scan::getName() {
-    return "Scan";
+    return "scan";
 }

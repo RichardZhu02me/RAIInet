@@ -17,5 +17,5 @@ bool Firewall::Effect(Player& player, Game::Cell& target) {
 }
 
 string Firewall::getName() {
-    return "Firewall";
+    return "firewall";
 }

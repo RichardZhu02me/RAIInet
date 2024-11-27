@@ -16,5 +16,5 @@ bool Weaken::Effect(Player& player, Game::Cell& target) {
 }
 
 string Weaken::getName() {
-    return "Weaken";
+    return "weaken";
 }

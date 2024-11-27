@@ -12,5 +12,5 @@ bool Polarize::Effect(Player& player, Game::Cell& target) {
 }
 
 string Polarize::getName() {
-    return "Polarize";
+    return "polarize";
 }

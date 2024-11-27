@@ -12,5 +12,5 @@ bool Download::Effect(Player& player, Game::Cell& target) {
 }
 
 string Download::getName() {
-    return "Download";
+    return "download";
 }

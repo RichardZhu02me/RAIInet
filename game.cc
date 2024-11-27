@@ -146,9 +146,18 @@ void Game::loss(int playerNum) {
     gameOver = true;
 }
 
-void Game::DisplayAbilities(int playerNum) {
+void Game::displayAbilities(int playerNum) {
     for (int i = 0; i < 8; i++) {
-        cout << getPlayer(playerNum)->abilities[i]->getId() << ":";
+        cout << getPlayer(playerNum)->abilities[i]->getId() << ": "
+            << getPlayer(playerNum)->abilities[i]->getName() << "  ";
+
+        if (getPlayer(playerNum)->abilities[i]->getAvailable()) {
+            cout << "AVAILABLE!";
+        } else {
+            cout << "UNAVAILABLE!";
+        }
+        
+        cout << endl;
     }
 }
 
@@ -168,21 +177,36 @@ void Game::runCommand(string command) {
             Game::endTurn();
         }
     } else if(action == "ability" && !playerCastedAbility) {
-        string abilityName;
-        ss >> abilityName;
-        int x, y;
-        ss >> x >> y;
+        int abilityNum;
+        ss >> abilityNum;
+        string abilityName = getPlayer(playerTurn)->getAbility(abilityNum)->getName();
+        size_t x, y;
+        if (abilityName == "linkboost" || abilityName == "download" ||
+            abilityName == "polarize" || abilityName == "scan") {
+            
+            string link;
+            char linkChar;
+            ss >> link;
+            linkChar = link[0];
+            Link& linkRef = getLink(linkChar);
+            x = linkRef->getX();
+            y = linkRef->getY();
+
+        } else if (abilityName == "firewall") {
+            ss >> x >> y;
+        }
         if (castAbility(abilityName, getCell(x, y))) {
             playerCastedAbility = true;
         }
     } else if(action == "abilities") {
-        for (int i = 0; )
+        displayAbiltiies(playerTurn);
     } else if(action == "board") {
         notifyObservers();
     } else if (action == "sequence") {
-        displayAbiltiies(playerTurn);
+        
     } else if (action == "quit") {
-
+        playerMovedLink = true;
+        gameOver = true;
     }
 }
 
@@ -194,6 +218,9 @@ void Game::runGame() {
             runCommand(command);
         }
         playerMovedLink == false;
+        if (playerTurn = 1) playerTurn = 2;
+        else if (playerTurn = 2) playerTurn = 1;
         notifyObservers();
     }
+
 }
