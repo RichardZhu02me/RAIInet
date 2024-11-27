@@ -1,4 +1,5 @@
 #include <vector>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -9,9 +10,10 @@
 using namespace std;
 
 //Player can set up their 5 abilities
-void abilitySetup(unique_ptr<Game>& g, size_t playerNum, vector<string> abilities) {
+//abilities is a string of 5 characters, each representing an ability
+void abilitySetup(unique_ptr<Game>& g, size_t playerNum, string abilities) {
     Player* pl = g->getPlayer(playerNum);
-    for (size i = 0; i < 5; i++) {
+    for (size_t i = 0; i < 5; i++) {
         pl->addAbility(abilities[i], i);
     }
 }
@@ -21,12 +23,12 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
     Player* pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
-
-    if (playerNum == 1) char base = 'a';
-    else char base = 'A';
+    char base;
+    if (playerNum == 1) base = 'a';
+    else base = 'A';
 
     for (int id = 0; id < 8; id++) {
-        inputFile >> word;
+        input >> word;
         char type = word[0];
         int strength = word[1] - '0';
         pl->setLink(type, strength, (base + id));
@@ -35,7 +37,7 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
 
 //This options allows the player to let the game randomly decide where the links go on the board
 void linkSetupRandom(Game& g, size_t playerNum) {
-    Player* pl = g->getPlayer(playerNum);
+    Player* pl = g.getPlayer(playerNum);
     // 4 Data links and 4 Virus links
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
@@ -51,47 +53,47 @@ void linkSetupRandom(Game& g, size_t playerNum) {
 }
 
 //Creates the grid board that the game will take place on
-void gridSetup(unique_ptr<Game>& g) {
-    Player* p1 = g->getPlayer(1);
-    Player* p2 = g->getPlayer(2);
+void gridSetup(Game& g) {
+    Player* p1 = g.getPlayer(1);
+    Player* p2 = g.getPlayer(2);
 
     size_t row = 1;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
-            g->getCell(row, col)->link = p1->link[col];
-            p1->link[col]->setCoord(row, col);
+            g.getCell(row, col).link = &p1->getPlLink(col);
+            p1->getPlLink(col).setCoord(row, col);
         }
     }
     for (size_t col = 4; col <= 5; col++) {
-        g->getCell(row, col)->build->buildServer(p1);
+        g.getCell(row, col).build->buildServer(*p1);
     }
 
     row = 2;
     for (size_t col = 4; col <= 5; col++) {
-        g->getCell(row, col)->link = p1->link[col];
-        p1->link[col]->setCoord(row, col);
+        g.getCell(row, col).link = &p1->getPlLink(col);
+        p1->getPlLink(col).setCoord(row, col);
     }
 
     row = 7;
     for (size_t col = 4; col <= 5; col++) {
-        g->getCell(row, col)->link = p2->link[col];
-        p2->link[col]->setCoord(row, col);
+        g.getCell(row, col).link = &p2->getPlLink(col);
+        p2->getPlLink(col).setCoord(row, col);
     }
 
     row = 8;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
-            g->getCell(row, col)->link = p2->link[col];
-            p2->link[col]->setCoord(row, col);
+            g.getCell(row, col).link = &p2->getPlLink(col);
+            p2->getPlLink(col).setCoord(row, col);
         }
     }
     for (size_t col = 4; col <= 5; col++) {
-        g->getCell(row, col)->build->buildServer(p2);
+        g.getCell(row, col).build->buildServer(*p2);
     }
 }
 
 int main(int argc, char* argv[]) {
-    unique_ptr<Game> g{new Game};
+    unique_ptr<Game> g{new Game()};
 
     const string DEFAULTAB = "LFDSP";
 
@@ -137,16 +139,16 @@ int main(int argc, char* argv[]) {
         abilitySetup(g, 1, DEFAULTAB);
     }
 
-    if (!links1Setup) {
-        linkSetupRandom(g, 0);
+    if (!links1setup) {
+        linkSetupRandom(*g, 0);
     }
 
-    if (!links1Setup) {
-        linkSetupRandom(g, 1);
+    if (!links2setup) {
+        linkSetupRandom(*g, 1);
     }
 
-    gridSetup(g);
-    g->attach(&g)
+    gridSetup(*g);
+    // g->attach(&g);
     g->runGame();
 
     return 0;

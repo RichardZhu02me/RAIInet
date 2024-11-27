@@ -11,14 +11,14 @@ bool Ability::cast(Player& player, Game::Cell& target) {
     return false;
 }
 
-bool getAvailable() const {
-    return Available;
+bool Ability::getAvailable() const {
+    return available;
 }
 
-void setUnavailable() {
-    Available = false;
+void Ability::setUnavailable() {
+    available = false;
 }
 
-size_t getId() {
+size_t Ability::getId() const {
     return id;
 }

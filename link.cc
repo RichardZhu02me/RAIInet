@@ -55,7 +55,7 @@ size_t Link::getY() const {
     return row;
 }
 
-void setCoord(size_t y, size_t x) {
+void Link::setCoord(size_t y, size_t x) {
     row = y;
     col = x;
 }

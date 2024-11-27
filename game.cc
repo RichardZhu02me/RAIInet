@@ -37,33 +37,38 @@ Game::Game() {
     playerMovedLink = false;
 }
 
-Link* Game::getLink(char l) {
+Link& Game::getLink(char l) const {
     if ( l > 'a' && l < 'g') {
-        getPlayer(1)->getPlLink(l -'a');
-    } else if ( l > 'A' && l < 'G') {
-        getPlayer(2)->getPlLink(l - 'A');
+        return getPlayer(1)->getPlLink(l -'a');
+    } 
+    else if ( l > 'A' && l < 'G') {
+        return getPlayer(2)->getPlLink(l - 'A'); 
     }
-    return theBoard[row][col].link;
+    throw invalid_argument("Invalid link character");
 }  
 
-Game::Cell& Game::getCell(size_t row, size_t col){
+const Game::Cell& Game::getCell(size_t row, size_t col) const{
     return theBoard[row][col];
 }
 
-char Game::getState(size_t row, size_t col) {
-    if (getCell(row, col)->firewall) {
-        if (getCell(row, col)->build->getPlayer()->getPlayerNum() == 1) {
+Game::Cell& Game::getCell(size_t row, size_t col) {
+    return theBoard[row][col];
+}
+
+char Game::getState(size_t row, size_t col) const {
+    if (getCell(row, col).firewall) {
+        if (getCell(row, col).build->getPlayer()->getPlayerNum() == 1) {
             return 'm';
         } else {
             return 'w';
         }
-    } else if (getCell(row, col)->server) {
+    } else if (getCell(row, col).server) {
         return 'S';
     } else {
-        if (g->getCell(row, col)->link == nullptr) {
+        if (getCell(row, col).link == nullptr) {
             return ' ';
         } else {
-            return getCell(row,col)->link->getSymbol();
+            return getCell(row,col).link->getSymbol();
         }
     }
 }
@@ -79,6 +84,7 @@ bool Game::castAbility(string ability, Cell& target) {
     }
     return false;
 }
+
 bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
     int travelDistance = linkRef->getTravelDistance();
     switch(direction) {
@@ -149,10 +155,10 @@ void Game::runCommand(string command) {
         ss >> direction;
         char l;
         ss >> l;
-        Link* linkRef = getLink(l);
-        int x = getLink(l)->getX();
-        int y = getLink(l)->getY();
-        if (moveLink(x, y, linkRef, direction)) {
+        Link& linkRef = getLink(l);
+        int x = linkRef.getX();
+        int y = linkRef.getY();
+        if (moveLink(x, y, &linkRef, direction)) {
             Game::endTurn();
         }
     }
@@ -164,7 +170,7 @@ void Game::runCommand(string command) {
         if (castAbility(abilityName, getCell(x, y))) {
             playerCastedAbility = true;
         }
-    } else if(action == 'abilities') {
+    } else if(action == "abilities") {
         
     }
 }

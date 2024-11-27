@@ -49,7 +49,7 @@ int Player::getPlayerNum(){
 }
 
 int Player::getNumOfAbLeft(){
-    return availableAbiltiies;
+    return availableAbilities;
 }
 
 int Player::getNumOfDataDld(){
@@ -68,8 +68,8 @@ int Player::addNumOfVirusDld(){
     return downloadedViruses += 1;
 }
 
-Link* Player::getPlLink(size_t id) {
-    return links[id];
+Link& Player::getPlLink(size_t id) {
+    return *links[id];
 }
 
 Ability* Player::getAbility(string ability) {
@@ -79,6 +79,11 @@ Ability* Player::getAbility(string ability) {
         }
     }
     return nullptr;
+}
+
+void Player::addAbility(char ability, size_t id) {
+
+    abilities.emplace_back(std::make_unique<Ability>(ability, id));
 }
 
 void Player::removeAbility(Ability* ability) {

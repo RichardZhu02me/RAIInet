@@ -9,7 +9,7 @@ class TextDisplay : public Observer {
     Game* g;
 
  public:
-    TextDisplay(unique_ptr<Game> g);
+    TextDisplay(Game* g);
     void notify() override;
     ~TextDisplay() override;
 };
