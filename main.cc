@@ -55,6 +55,7 @@ void gridSetup(unique_ptr<Game>& g) {
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
             g->getCell(row, col)->link = p1->link[col];
+            p1->link[col]->setCoord(row, col);
         }
     }
     for (size_t col = 4; col <= 5; col++) {
@@ -64,17 +65,20 @@ void gridSetup(unique_ptr<Game>& g) {
     row = 2;
     for (size_t col = 4; col <= 5; col++) {
         g->getCell(row, col)->link = p1->link[col];
+        p1->link[col]->setCoord(row, col);
     }
 
     row = 7;
     for (size_t col = 4; col <= 5; col++) {
         g->getCell(row, col)->link = p2->link[col];
+        p2->link[col]->setCoord(row, col);
     }
 
     row = 8;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
             g->getCell(row, col)->link = p2->link[col];
+            p2->link[col]->setCoord(row, col);
         }
     }
     for (size_t col = 4; col <= 5; col++) {

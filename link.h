@@ -12,6 +12,8 @@ class Link {
     bool revealed;
     char symbol;
     Player* owner;
+    size_t row;
+    size_t col;
 
 public:
     Link(const std::string& type, int strength, char symbol, Player* owner);
@@ -27,6 +29,10 @@ public:
     Player* getOwner() const;
     bool boost();
 
+    size_t getX() const;
+    size_t getY() const;
+
+    void setCoord(size_t y, size_t x);
     void weaken(int amount);
 };
 
