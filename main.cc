@@ -9,14 +9,14 @@
 
 using namespace std;
 
-void abilitySetup(unique_ptr<Game>& g, int playerNum, vector<string> abilities) {
+void abilitySetup(unique_ptr<Game>& g, size_t playerNum, vector<string> abilities) {
     unique_ptr<Player> pl = g->getPlayer(playerNum);
     for (int i = 0; i < 5; i++) {
         pl->addAbility(abilities[i]);
     }
 }
 
-void linkSetup(unique_ptr<Game>& g, int playerNum, string linkFile) {
+void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
     unique_ptr<Player> pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
@@ -28,7 +28,7 @@ void linkSetup(unique_ptr<Game>& g, int playerNum, string linkFile) {
     }
 }
 
-void linkSetupRandom(Game& g, int playerNum) {
+void linkSetupRandom(Game& g, size_t playerNum) {
     Player* pl = g.getPlayer(playerNum);
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
@@ -36,7 +36,7 @@ void linkSetupRandom(Game& g, int playerNum) {
 
     shuffle(linkVals.begin(), linkVals.end(), gen);
 
-    for (int id = 0; id < 8; id++) {
+    for (size_t id = 0; id < 8; id++) {
         char type = linkVals[id][0];
         int strength = linkVals[id][1] - '0';
         pl->setLink(type, strength, id);
@@ -44,33 +44,33 @@ void linkSetupRandom(Game& g, int playerNum) {
 }
 
 void gridSetup(unique_ptr<Game>& g) {
-    int row = 1;
-    for (int col = 1; col <= 8; col++) {
+    size_t row = 1;
+    for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
             g->getCell(row, col)->link = g->p1->link[col];
         }
     }
-    for (int col = 4; col <= 5; col++) {
+    for (size_t col = 4; col <= 5; col++) {
         g->getCell(row, col)->build->buildServer(p1);
     }
 
     row = 2;
-    for (int col = 4; col <= 5; col++) {
+    for (size_t col = 4; col <= 5; col++) {
         g->getCell(row, col)->link = g->p1->link[col];
     }
 
     row = 7;
-    for (int col = 4; col <= 5; col++) {
+    for (size_t col = 4; col <= 5; col++) {
         g->getCell(row, col)->link = g->p2->link[col];
     }
 
     row = 8;
-    for (int col = 1; col <= 8; col++) {
+    for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
             g->getCell(row, col)->link = g->p2->link[col];
         }
     }
-    for (int col = 4; col <= 5; col++) {
+    for (size_t col = 4; col <= 5; col++) {
         g->getCell(row, col)->build->buildServer(p2);
     }
 }

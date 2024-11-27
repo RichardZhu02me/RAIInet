@@ -17,7 +17,7 @@ void TextDisplay::notify() {
     cout << "Abilities: " << g->getPlayer(1)->getNumOfAbLeft() << endl;
 
     char base = 'a';
-    for (int i = 0; i < 8; i++) {
+    for (size_t i = 0; i < 8; i++) {
         cout << (base + 0) << ": " << g->getPlayer(1)->getLink(i)->getType()
             << g->getPlayer(1)->getLink(i)->getStrength() << " ";
         if (i == 3 || i == 7) cout << endl;
@@ -25,6 +25,11 @@ void TextDisplay::notify() {
 
     cout << "========";
 
+    for (size_t) row = 0; row < 8; row++) {
+        for (size_t col = 0; col < 8; col++) {
+            if (g->getCell()
+        }
+    }
     //output what's in cells, use getState of some sort, figure out tomorrow
 
     cout << "========";
@@ -37,7 +42,7 @@ void TextDisplay::notify() {
     cout << "Abilities: " << g->getPlayer(2)->getNumOfAbLeft() << endl;
 
     base = 'A';
-    for (int i = 0; i < 8; i++) {
+    for (size_t i = 0; i < 8; i++) {
         if (g->getPlayer(2)->getLink(i)->isHidden()) {
             cout << (base + 0) << ": ?  ";
         } else {
