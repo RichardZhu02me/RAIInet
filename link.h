@@ -1,20 +1,30 @@
+// Link.h
 #ifndef LINK_H
 #define LINK_H
 
+#include <string>
+#include "player.h"
 
-class Link{
+class Link {
+    std::string type; // "data" or "virus"
     int travelDistance;
-    string linkType;
-    bool hidden;
+    int strength;
+    bool revealed;
     Player* owner;
-    public:
-        //increase the travel distance by 1
-        void boost();
-        //set the link to the opposite linkType
-        void polarize();
-        void hide();
-        void reveal();
-        int getTravelDistance() const;
-        Player* getOwner() const;
+
+public:
+    Link(const std::string& type, int strength, Player* owner);
+    ~Link();
+    bool fightWon(const Link& opponent) const;
+    void changeType();
+    bool isRevealed() const;
+    void reveal();
+    const std::string& getType() const;
+    int getStrength() const;
+    int getTravelDistance() const;
+    Player* getOwner() const;
+    bool boost();
+
 };
-#endif
+
+#endif // LINK_H

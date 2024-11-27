@@ -1,13 +1,34 @@
-#ifndef player_H
-#define player_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
-#include "link.h"
+#include "Link.h"
 #include <vector>
+#include <memory>
+#include <string>
+#include "ability.h"
 
-class Player{
-    std::vector<Link*> links;
+class Player {
+    std::vector<std::unique_ptr<Link>> links;
+    int playerNum;
+    int downloadedData;
+    int downloadedViruses;
+    int availableAbilities;
+
 public:
-    void download(Link* link);
+    Player(int number);
+    ~Player();
+    void notifyWin() const;
+    void download(bool isData);
+    bool isHidden(int linkIndex) const;
+    void customizeLinks(const std::vector<std::string>& linkDescriptions);
+    const std::vector<std::unique_ptr<Link>>& getLinks() const;
+    int getPlayerNum();
+    int getNumOfDataDld();
+    int getNumOfVirusDld();
+    int addNumOfDataDld();
+    int addNumOfVirusDld();
+
     Ability* getAbility(string ability);
 };
-#endif
+
+#endif // PLAYER_H

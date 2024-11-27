@@ -4,6 +4,6 @@ bool Polarize::Effect(Player& player, Game::Cell& target) {
     if (target.link == nullptr) {
         return false;
     }
-    target.link->polarize();
+    target.link->changeType();
     return true;
 }
