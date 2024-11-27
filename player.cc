@@ -48,6 +48,10 @@ int Player::getPlayerNum(){
     return playerNum;
 }
 
+int Player::getNumOfAbLeft(){
+    return availableAbiltiies;
+}
+
 int Player::getNumOfDataDld(){
     return downloadedData;
 }

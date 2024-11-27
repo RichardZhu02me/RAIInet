@@ -26,6 +26,7 @@ public:
     void customizeLinks(const std::vector<std::string>& linkDescriptions);
     const std::vector<std::unique_ptr<Link>>& getLinks() const;
     int getPlayerNum();
+    int getNumOfAbLeft();
     int getNumOfDataDld();
     int getNumOfVirusDld();
     int addNumOfDataDld();
