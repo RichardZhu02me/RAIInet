@@ -1,6 +1,5 @@
 #include <vector>
 #include <iostream>
-#include "game.h"
 #include <string>
 #include <algorithm>
 #include <random>
@@ -9,6 +8,7 @@
 
 using namespace std;
 
+//Player can set up their 5 abilities
 void abilitySetup(unique_ptr<Game>& g, size_t playerNum, vector<string> abilities) {
     Player* pl = g->getPlayer(playerNum);
     for (int i = 0; i < 5; i++) {
@@ -16,6 +16,7 @@ void abilitySetup(unique_ptr<Game>& g, size_t playerNum, vector<string> abilitie
     }
 }
 
+//Player sets up where they want their links on the board before game starts
 void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
     Player* pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
@@ -32,8 +33,10 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
     }
 }
 
+//This options allows the player to let the game randomly decide where the links go on the board
 void linkSetupRandom(Game& g, size_t playerNum) {
     Player* pl = g->getPlayer(playerNum);
+    // 4 Data links and 4 Virus links
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
     mt19937 gen(rd());
@@ -47,6 +50,7 @@ void linkSetupRandom(Game& g, size_t playerNum) {
     }
 }
 
+//Creates the grid board that the game will take place on
 void gridSetup(unique_ptr<Game>& g) {
     Player* p1 = g->getPlayer(1);
     Player* p2 = g->getPlayer(2);
