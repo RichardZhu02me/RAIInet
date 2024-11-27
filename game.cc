@@ -164,7 +164,7 @@ void Game::runCommand(string command) {
         if (castAbility(abilityName, getCell(x, y))) {
             playerCastedAbility = true;
         }
-    } else if(action == 'abilities') {
+    } else if(action == "abilities") {
         
     }
 }

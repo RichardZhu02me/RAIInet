@@ -21,7 +21,6 @@ public:
 
     bool getAvailable() const;
     void setUnavailable();
-    size_t getId() const;
 };
 
 #endif
