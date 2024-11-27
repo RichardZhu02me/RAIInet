@@ -42,3 +42,6 @@ int Link::getTravelDistance() const {
     return travelDistance;
 }
 
+void Link::weaken(int amount) {
+    strength -= strength - amount < 0 ? 0 : strength - amount;
+}

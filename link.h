@@ -25,6 +25,7 @@ public:
     Player* getOwner() const;
     bool boost();
 
+    void weaken(int amount);
 };
 
 #endif // LINK_H
