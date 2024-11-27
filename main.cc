@@ -1,4 +1,9 @@
 #include <vector>
+#include <iostream>
+#include "grid.h"
+#include <string>
+#include <algorithm>
+#include <random>
 #include "game.h"
 #include "player.h"
 
