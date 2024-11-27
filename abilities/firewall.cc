@@ -1,5 +1,7 @@
 #include "firewall.h"
+#include <string>
 
+using namespace std;
 
 bool Firewall::Effect(Player& player, Game::Cell& target) {
     if (target.link != nullptr) {
@@ -12,4 +14,8 @@ bool Firewall::Effect(Player& player, Game::Cell& target) {
     //set the build on the cell
     target.build = Game::Build::buildFirewall(player);
     return true;
+}
+
+string Firewall::getName() {
+    return "Firewall";
 }

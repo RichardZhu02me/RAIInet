@@ -1,4 +1,7 @@
 #include "linkboost.h"
+#include <string>
+
+using namespace std;
 
 bool LinkBoost::Effect(Player& player, Game::Cell& target) {
     if (target.link == nullptr) {
@@ -6,4 +9,8 @@ bool LinkBoost::Effect(Player& player, Game::Cell& target) {
     }
     target.link->boost();
     return true;
-}  
+} 
+
+string LinkBoost::getName() {
+    return "Linkboost";
+}

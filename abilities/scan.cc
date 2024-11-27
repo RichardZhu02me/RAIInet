@@ -1,4 +1,7 @@
 #include "scan.h"
+#include <string>
+
+using namespace std;
 
 bool Scan::Effect(Player& player, Game::Cell& target) {
     //if there is no link or the link is owned by the player return false
@@ -8,4 +11,8 @@ bool Scan::Effect(Player& player, Game::Cell& target) {
     // do we want to reveal the link to the Game or the player?
     target.link->reveal();
     return true;
+}
+
+string Scan::getName() {
+    return "Scan";
 }

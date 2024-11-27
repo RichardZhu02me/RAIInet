@@ -79,6 +79,7 @@ bool Game::castAbility(string ability, Cell& target) {
     }
     return false;
 }
+
 bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
     int travelDistance = linkRef->getTravelDistance();
     switch(direction) {
@@ -140,6 +141,12 @@ void Game::loss(int playerNum) {
     gameOver = true;
 }
 
+void Game::DisplayAbilities(int playerNum) {
+    for (int i = 0; i < 8; i++) {
+        cout << getPlayer(playerNum)->abilities[i]->getId() << ":";
+    }
+}
+
 void Game::runCommand(string command) {
     stringstream ss(command);
     string action;
@@ -155,8 +162,7 @@ void Game::runCommand(string command) {
         if (moveLink(x, y, linkRef, direction)) {
             Game::endTurn();
         }
-    }
-    else if(action == "ability" && !playerCastedAbility) {
+    } else if(action == "ability" && !playerCastedAbility) {
         string abilityName;
         ss >> abilityName;
         int x, y;
@@ -165,7 +171,13 @@ void Game::runCommand(string command) {
             playerCastedAbility = true;
         }
     } else if(action == "abilities") {
-        
+        for (int i = 0; )
+    } else if(action == "board") {
+        notifyObservers();
+    } else if (action == "sequence") {
+        displayAbiltiies(playerTurn);
+    } else if (action == "quit") {
+
     }
 }
 

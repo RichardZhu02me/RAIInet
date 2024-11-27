@@ -40,8 +40,9 @@ public:
     void runCommand(string command);
     void runGame();
     bool castAbility(string ability, Cell& target);
-    bool moveLink(int x, int y, char direction);
+    bool moveLink(size_t x, size_t y, Link* linkRef, char direction);
     void removeLink(Cell& target);
+
     void endTurn();
     Player* getPlayer(int playerNum);
     void win(int playerNum);

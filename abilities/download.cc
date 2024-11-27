@@ -1,5 +1,7 @@
 #include "download.h"
+#include <string>
 
+using namespace std;
 
 bool Download::Effect(Player& player, Game::Cell& target) {
     if (target.link == nullptr) {
@@ -7,4 +9,8 @@ bool Download::Effect(Player& player, Game::Cell& target) {
     }
     player.download(target.link);
     return true;
+}
+
+string Download::getName() {
+    return "Download";
 }
