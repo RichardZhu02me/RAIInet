@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "player.h"
+#include <string>
 using namespace std;
 
 class Ability {
@@ -13,6 +14,7 @@ private:
    virtual bool Effect(Player& player, Game::Cell& target)=0;
    bool available = true;
    int id;
+   string name;
 public:
     //cast the ability on the target cell
     //return true if the ability was cast successfully
@@ -21,7 +23,8 @@ public:
 
     bool getAvailable() const;
     void setUnavailable();
-    size_t getId() const;
+    int getId() const;
+    virtual string getName();
 };
 
 #endif

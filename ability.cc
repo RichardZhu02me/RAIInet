@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 //cast the ability on the target cell
 //return true if the ability was cast successfully
 //return false otherwise
@@ -20,5 +19,9 @@ void Ability::setUnavailable() {
 }
 
 size_t Ability::getId() const {
+    return id;
+}
+
+int Ability::getId() const {
     return id;
 }

@@ -45,6 +45,7 @@ public:
     bool castAbility(string ability, Cell& target);
     bool moveLink(size_t x, size_t y, Link* linkRef, char direction);
     void removeLink(Cell& target);
+
     void endTurn();
     Player* getPlayer(int playerNum) const;
     void win(int playerNum);
