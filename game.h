@@ -16,9 +16,11 @@ public:
     static const int MAX_LINK_DISTANCE;
     static const map<string, string> ABILITIES;
     class Build {
+        int playerId;
         Player* player;
         string structureName;
     public:
+        int getPlayerId() const;
         Player* getPlayer() const;
         string getStructureName() const;
         static Build* buildFirewall(Player& player);
