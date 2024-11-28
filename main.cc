@@ -6,6 +6,7 @@
 #include <random>
 #include "game.h"
 #include "player.h"
+#include "textdisplay.h"
 
 using namespace std;
 
@@ -42,13 +43,16 @@ void linkSetupRandom(Game& g, size_t playerNum) {
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
     mt19937 gen(rd());
+    char base;
+    if (playerNum == 1) base = 'a';
+    else base = 'A';
 
     shuffle(linkVals.begin(), linkVals.end(), gen);
 
     for (size_t id = 0; id < 8; id++) {
         char type = linkVals[id][0];
         int strength = linkVals[id][1] - '0';
-        pl->setLink(type, strength, id);
+        pl->setLink(type, strength, (base + id));
     }
 }
 
@@ -148,8 +152,11 @@ int main(int argc, char* argv[]) {
     }
 
     gridSetup(*g);
-    // g->attach(&g);
+    unique_ptr<TextDisplay> t{new TextDisplay{&g}};
+    g->attach(t);
     g->runGame();
+
+    //delete everything if need be
 
     return 0;
 }

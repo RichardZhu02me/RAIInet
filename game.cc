@@ -37,6 +37,8 @@ Game::Game() {
     playerMovedLink = false;
 }
 
+~Game() {}
+
 Link& Game::getLink(char l) const {
     if ( l > 'a' && l < 'g') {
         return getPlayer(1)->getPlLink(l -'a');
@@ -141,7 +143,7 @@ void Game::win(int playerNum) {
     gameOver = true;
 }
 
-void Game::loss(int playerNum) {
+void Game::loss(int playerNum) { //don't need this
     cout << "Player " << (playerNum%(players.size()-1))+1 << " wins!" << endl;
     gameOver = true;
 }
@@ -203,10 +205,26 @@ void Game::runCommand(string command) {
     } else if(action == "board") {
         notifyObservers();
     } else if (action == "sequence") {
-        
+        //implement sequence command
     } else if (action == "quit") {
         playerMovedLink = true;
         gameOver = true;
+    }
+}
+
+void Game::checkWin() {
+    int otherPlayerNum;
+    if (playerTurn == 1) otherPlayerNum = 2;
+    else otherPlayerNum = 1;
+
+    if (getPlayer(playerTurn)->getNumOfDataDld() == 4 ||
+            getPlayer(otherPlayerNum)->getNumOfVirusDld() == 4) {
+        win(playerTurn);
+        playerMovedLink = true;
+    } else if (getPlayer(otherPlayerNum)->getNumOfDataDld() == 4 ||
+                getPlayer(PlayerTurn)->getNumOfVirusDld() == 4) {
+        win(otherPlayerNum);
+        playerMovedLink = true;
     }
 }
 
@@ -216,7 +234,9 @@ void Game::runGame() {
             string command;
             getline(cin, command);
             runCommand(command);
+            checkWin();
         }
+
         playerMovedLink == false;
         if (playerTurn = 1) playerTurn = 2;
         else if (playerTurn = 2) playerTurn = 1;

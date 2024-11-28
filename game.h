@@ -50,6 +50,8 @@ public:
     Player* getPlayer(int playerNum) const;
     void win(int playerNum);
     void loss(int playerNum);
+    void checkWin();
+
 private:
    vector<vector<Cell>> theBoard;
    vector<unique_ptr<Player>> players;

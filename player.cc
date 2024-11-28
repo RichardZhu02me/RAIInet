@@ -6,11 +6,11 @@ Player::Player(int number) : downloadedData{0},downloadedViruses{0},availableAbi
 
 Player::~Player(){}
 
-void Player::notifyWin() const {
+void Player::notifyWin() const { //what are these for???
     game->win(playerNum);
 }
 
-void Player::notifyLoss() const {
+void Player::notifyLoss() const { //what are these for???
     //fix
     game->loss(playerNum);
 }
