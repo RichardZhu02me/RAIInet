@@ -16,9 +16,11 @@ public:
     static const int MAX_LINK_DISTANCE;
     static const map<string, string> ABILITIES;
     class Build {
+        int playerId;
         Player* player;
         string structureName;
     public:
+        int getPlayerId() const;
         Player* getPlayer() const;
         string getStructureName() const;
         static Build* buildFirewall(Player& player);
@@ -50,6 +52,7 @@ public:
     Player* getPlayer(int playerNum) const;
     void win(int playerNum);
     void loss(int playerNum);
+    void displayAbilities(int playerNum);
     void checkWin();
 
 private:
@@ -60,6 +63,9 @@ private:
    bool playerCastedAbility;
    bool playerMovedLink;
    bool gameOver;
+   string fileName;
+   bool useSequence = false;
+   bool useSequenceFirst = false;
 };
 
 #endif
