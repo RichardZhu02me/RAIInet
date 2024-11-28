@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include "game.h"
 #include <map>
 #include <typeinfo> 
