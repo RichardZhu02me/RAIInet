@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-Player::Player(int number) : downloadedData{0},downloadedViruses{0},availableAbilities{0},playerNum{number} {}
+Player::Player(int number) : playerNum{number},downloadedData{0},downloadedViruses{0},availableAbilities{0} {}
 
 Player::~Player(){}
 

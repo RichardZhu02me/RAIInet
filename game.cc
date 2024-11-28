@@ -312,6 +312,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         default:
             return false;
     } //add firewall check, still haven't
+    return false;
 }
 
 void Game::removeLink(Cell& target) {
