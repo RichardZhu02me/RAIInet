@@ -92,7 +92,7 @@ void Game::downloadLink(int playerNum, string type) {
     if (type == "data") {
         getPlayer(playerNum)->download(true);
     } else {
-        getPlayer(playreNum)->download(false);
+        getPlayer(playerNum)->download(false);
     }
 }
 
@@ -102,7 +102,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         case 'u':
             if(y-travelDistance >= 0) {
                 if(theBoard[y-travelDistance][x].link == nullptr) {
-                    if (y-traveldistance == 0 && (x == 4 && x == 5) && playerTurn == 2) {
+                    if (y-travelDistance == 0 && (x == 4 && x == 5) && playerTurn == 2) {
                         downloadLink(1, linkRef->getType());
                         removeLink(theBoard[y][x]);
                         linkRef->setCoord(100, 100);
@@ -114,7 +114,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(theBoard[y-travelDistance][x].link)) {
+                    if (linkRef->fightWon(*theBoard[y-travelDistance][x].link)) {
                         removeLink(theBoard[y][x]);
                         theBoard[y-travelDistance][x].link->setCoord(100, 100);
                         theBoard[y-travelDistance][x].link = linkRef;
@@ -124,6 +124,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                     } else {
                         removeLink(theBoard[y][x]);
                         linkRef->setCoord(100, 100);
+                        int otherPlayerNum;
                         if (playerTurn == 1) otherPlayerNum = 2;
                         else otherPlayerNum = 1;
                         downloadLink(otherPlayerNum, theBoard[y-travelDistance][x].link->getType());
@@ -143,7 +144,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         case 'd':
             if(y+travelDistance <= 7) {
                 if(theBoard[y+travelDistance][x].link == nullptr) {
-                    if (y+traveldistance == 7 && (x == 4 && x == 5) && playerTurn == 1) {
+                    if (y+travelDistance == 7 && (x == 4 && x == 5) && playerTurn == 1) {
                         downloadLink(2, linkRef->getType());
                         removeLink(theBoard[y][x]);
                         linkRef->setCoord(100, 100);
@@ -155,7 +156,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(theBoard[y+travelDistance][x].link)) {
+                    if (linkRef->fightWon(*theBoard[y+travelDistance][x].link)) {
                         removeLink(theBoard[y][x]);
                         theBoard[y+travelDistance][x].link->setCoord(100, 100);
                         theBoard[y+travelDistance][x].link = linkRef;
@@ -165,6 +166,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                     } else {
                         removeLink(theBoard[y][x]);
                         linkRef->setCoord(100, 100);
+                        int otherPlayerNum;
                         if (playerTurn == 1) otherPlayerNum = 2;
                         else otherPlayerNum = 1;
                         downloadLink(otherPlayerNum, theBoard[y+travelDistance][x].link->getType());
@@ -201,7 +203,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(theBoard[y][x-travelDistance].link)) {
+                    if (linkRef->fightWon(*theBoard[y][x-travelDistance].link)) {
                         removeLink(theBoard[y][x]);
                         theBoard[y][x-travelDistance].link->setCoord(100, 100);
                         theBoard[y][x-travelDistance].link = linkRef;
@@ -211,6 +213,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                     } else {
                         removeLink(theBoard[y][x]);
                         linkRef->setCoord(100, 100);
+                        int otherPlayerNum;
                         if (playerTurn == 1) otherPlayerNum = 2;
                         else otherPlayerNum = 1;
                         downloadLink(otherPlayerNum, theBoard[y][x-travelDistance].link->getType());
@@ -241,7 +244,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(theBoard[y][x+travelDistance].link)) {
+                    if (linkRef->fightWon(*theBoard[y][x+travelDistance].link)) {
                         removeLink(theBoard[y][x]);
                         theBoard[y][x+travelDistance].link->setCoord(100, 100);
                         theBoard[y][x+travelDistance].link = linkRef;
@@ -251,6 +254,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                     } else {
                         removeLink(theBoard[y][x]);
                         linkRef->setCoord(100, 100);
+                        int otherPlayerNum;
                         if (playerTurn == 1) otherPlayerNum = 2;
                         else otherPlayerNum = 1;
                         downloadLink(otherPlayerNum, theBoard[y][x+travelDistance].link->getType());
@@ -289,10 +293,10 @@ void Game::loss(int playerNum) { //don't need this
 
 void Game::displayAbilities(int playerNum) {
     for (int i = 0; i < 8; i++) {
-        cout << getPlayer(playerNum)->abilities[i]->getId() << ": "
-            << getPlayer(playerNum)->abilities[i]->getName() << "  ";
+        cout << getPlayer(playerNum)->getAbility(i)->getId() << ": "
+            << getPlayer(playerNum)->getAbility(i)->getName() << "  ";
 
-        if (getPlayer(playerNum)->abilities[i]->getAvailable()) {
+        if (getPlayer(playerNum)->getAbility(i)->getAvailable()) {
             cout << "AVAILABLE!";
         } else {
             cout << "UNAVAILABLE!";
@@ -329,9 +333,9 @@ void Game::runCommand(string command) {
             char linkChar;
             ss >> link;
             linkChar = link[0];
-            Link& linkRef = getLink(linkChar);
-            x = linkRef->getX();
-            y = linkRef->getY();
+            Link linkRef = getLink(linkChar);
+            x = linkRef.getX();
+            y = linkRef.getY();
 
         } else if (abilityName == "firewall") {
             ss >> x >> y;
@@ -340,7 +344,7 @@ void Game::runCommand(string command) {
             playerCastedAbility = true;
         }
     } else if(action == "abilities") {
-        displayAbiltiies(playerTurn);
+        displayAbilities(playerTurn);
     } else if(action == "board") {
         notifyObservers();
     } else if (action == "sequence") {
@@ -361,7 +365,7 @@ void Game::checkWin() {
         win(playerTurn);
         playerMovedLink = true;
     } else if (getPlayer(otherPlayerNum)->getNumOfDataDld() == 4 ||
-                getPlayer(PlayerTurn)->getNumOfVirusDld() == 4) {
+                getPlayer(playerTurn)->getNumOfVirusDld() == 4) {
         win(otherPlayerNum);
         playerMovedLink = true;
     }

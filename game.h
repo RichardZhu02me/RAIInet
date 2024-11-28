@@ -50,6 +50,7 @@ public:
     Player* getPlayer(int playerNum) const;
     void win(int playerNum);
     void loss(int playerNum);
+    void displayAbilities(int playerNum);
     void checkWin();
 
 private:
