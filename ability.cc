@@ -18,9 +18,9 @@ void Ability::setUnavailable() {
     available = false;
 }
 
-size_t Ability::getId() const {
-    return id;
-}
+// size_t Ability::getId() const {
+//     return id;
+// }
 
 int Ability::getId() const {
     return id;

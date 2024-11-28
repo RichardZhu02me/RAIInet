@@ -3,7 +3,7 @@
 #define LINK_H
 
 #include <string>
-#include "player.h"
+class Player;
 
 class Link {
     std::string type; // "data" or "virus"

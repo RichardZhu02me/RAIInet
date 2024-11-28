@@ -1,11 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Link.h"
+class Link;
+class Game;
+class Ability;
 #include <vector>
 #include <memory>
 #include <string>
-#include "ability.h"
 
 class Player {
     std::vector<std::unique_ptr<Link>> links;
