@@ -77,7 +77,7 @@ char Game::getState(size_t row, size_t col) const {
 
 bool Game::castAbility(string ability, Cell& target) {
     //check if current player has the ability
-    Ability* a = players[playerTurn]->getAbility(Game::ABILITIES.at(ability));
+    Ability* a = getPlayer(playerTurn)->getAbility(Game::ABILITIES.at(ability));
     if(a != nullptr) {
         if (a->cast(*players[playerTurn], target)) {
             players[playerTurn]->removeAbility(a);
@@ -87,16 +87,47 @@ bool Game::castAbility(string ability, Cell& target) {
     return false;
 }
 
+void Game::downloadLink(int playerNum, string type) {
+    if (type == "data") {
+        getPlayer(playerNum)->download(true);
+    } else {
+        getPlayer(playreNum)->download(false);
+    }
+}
+
 bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
     int travelDistance = linkRef->getTravelDistance();
     switch(direction) {
         case 'u':
             if(y-travelDistance >= 0) {
                 if(theBoard[y-travelDistance][x].link == nullptr) {
-                    theBoard[y][x].link = 0;
-                    theBoard[y-travelDistance][x].link = linkRef;
-                    linkRef->setCoord(x, y+1);
-                    return true;
+                    if (y-traveldistance == 0 && (x == 4 && x == 5) && playerTurn == 2) {
+                        downloadLink(1, linkRef->getType());
+                        removeLink(theBoard[y][x]);
+                        linkRef->setCoord(100, 100);
+                        return true;
+                    } else {
+                        removeLink(theBoard[y][x]);
+                        theBoard[y-travelDistance][x].link = linkRef;
+                        linkRef->setCoord(x, y-1);
+                        return true;
+                    }
+                } else {
+                    if (linkRef->fightWon(theBoard[y-travelDistance][x].link)) {
+                        removeLink(theBoard[y][x]);
+                        theBoard[y-travelDistance][x].link->setCoord(100, 100);
+                        theBoard[y-travelDistance][x].link = linkRef;
+                        linkRef->setCoord(x, y-1);
+                        downloadLink(playerTurn, linkRef->getType());
+                        return true;
+                    } else {
+                        removeLink(theBoard[y][x]);
+                        linkRef->setCoord(100, 100);
+                        if (playerTurn == 1) otherPlayerNum = 2;
+                        else otherPlayerNum = 1;
+                        downloadLink(otherPlayerNum, theBoard[y-travelDistance][x].link->getType());
+                        return true;
+                    }
                 }
             } else if (playerTurn == 2) {
                 if (linkRef->getType() == "data") {
@@ -115,9 +146,9 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         case 'd':
             if(y+travelDistance <= 7) {
                 if(theBoard[y+travelDistance][x].link == nullptr) {
-                    theBoard[y][x].link = 0;
+                    removeLink(theBoard[y][x]);
                     theBoard[y+travelDistance][x].link = linkRef;
-                    linkRef->setCoord(x, y-1);
+                    linkRef->setCoord(x, y+1);
                     return true;
                 }
             } else if (playerTurn == 1) {
@@ -136,7 +167,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         case 'l':
             if(x-travelDistance >= 0) {
                 if(theBoard[y][x-travelDistance].link == nullptr) {
-                    theBoard[y][x].link = 0;
+                    removeLink(theBoard[y][x]);
                     theBoard[y][x-travelDistance].link = linkRef;
                     linkRef->setCoord(x-1, y);
                     return true;
@@ -148,7 +179,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         case 'r':
             if(x+travelDistance <= 7) {
                 if(theBoard[y][x+travelDistance].link == nullptr) {
-                    theBoard[y][x].link = 0;
+                    removeLink(theBoard[y][x]);
                     theBoard[y][x+travelDistance].link = linkRef;
                     linkRef->setCoord(x+1, y);
                     return true;

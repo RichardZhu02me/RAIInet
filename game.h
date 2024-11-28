@@ -53,6 +53,7 @@ public:
     void checkWin();
 
 private:
+   void downloadLink(int playerNum, string type);
    vector<vector<Cell>> theBoard;
    vector<unique_ptr<Player>> players;
    int playerTurn;
