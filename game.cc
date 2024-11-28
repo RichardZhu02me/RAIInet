@@ -37,7 +37,7 @@ Game::Game() {
     playerMovedLink = false;
 }
 
-~Game() {}
+Game::~Game() {}
 
 Link& Game::getLink(char l) const {
     if ( l > 'a' && l < 'g') {
