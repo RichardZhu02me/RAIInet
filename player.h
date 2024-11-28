@@ -33,8 +33,8 @@ public:
     int addNumOfVirusDld();
 
     Link& getPlLink(size_t id);
-    Ability* getAbility(string ability);    
-    void removeAbility(Ability* ability);
+    Ability* getAbility(size_t abId);    
+    void removeAbility(size_t abId);
     void addAbility(char ability, size_t id);
     void setLink(char type, int strength, char symbol);
 };

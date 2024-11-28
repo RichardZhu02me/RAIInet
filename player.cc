@@ -77,23 +77,22 @@ Link& Player::getPlLink(size_t id) {
     return *links[id];
 }
 
-Ability* Player::getAbility(string ability) {
+Ability* Player::getAbility(size_t abId) {
     for (auto& a : abilities) {
-        if (typeid(*a).name() == ability) {
-            return a.get();
+        if (typeid(*a).getId() == id) {
+            return a;
         }
     }
     return nullptr;
 }
 
 void Player::addAbility(char ability, size_t id) {
-
     abilities.emplace_back(std::make_unique<Ability>(ability, id));
 }
 
-void Player::removeAbility(Ability* ability) {
+void Player::removeAbility(size_t abId) {
     for (auto& a : abilities) {
-        if (a.get() == ability) {
+        if (a.getId() == abId) {
             abilities.erase(std::remove(abilities.begin(), abilities.end(), a), abilities.end());
             break;
         }
