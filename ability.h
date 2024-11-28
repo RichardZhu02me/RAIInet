@@ -24,6 +24,7 @@ public:
     bool getAvailable() const;
     void setUnavailable();
     int getId() const;
+    //size_t getId() const;
     virtual string getName();
 };
 
