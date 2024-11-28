@@ -3,11 +3,11 @@
 #include "game.h"
 #include <map>
 #include <typeinfo> 
-#include "linkboost.h"
-#include "firewall.h"
-#include "download.h"
-#include "polarize.h"
-#include "scan.h"
+#include "./abilities/linkboost.h"
+#include "./abilities/firewall.h"
+#include "./abilities/download.h"
+#include "./abilities/polarize.h"
+#include "./abilities/scan.h"
 #include "link.h"
 #include "subject.h"
 
@@ -37,7 +37,7 @@ Game::Game() {
     playerMovedLink = false;
 }
 
-~Game() {}
+Game::~Game() {}
 
 Link& Game::getLink(char l) const {
     if ( l > 'a' && l < 'g') {
@@ -273,8 +273,8 @@ void Game::runGame() {
         }
 
         playerMovedLink == false;
-        if (playerTurn = 1) playerTurn = 2;
-        else if (playerTurn = 2) playerTurn = 1;
+        if (playerTurn == 1) playerTurn = 2;
+        else if (playerTurn == 2) playerTurn = 1;
         notifyObservers();
     }
 
