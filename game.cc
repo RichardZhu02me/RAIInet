@@ -37,7 +37,10 @@ Game::Game() {
             cell = make_unique<Cell>();
         }
     }
-    
+
+    players.emplace_back(unique_ptr<Player> {new Player(1)});
+    players.emplace_back(unique_ptr<Player> {new Player(2)});
+
     gameOver = false;
     playerTurn = 0;
     playerCastedAbility = false;
