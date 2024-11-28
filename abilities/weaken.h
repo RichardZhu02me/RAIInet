@@ -1,15 +1,15 @@
-#ifndef SCAN_H
-#define SCAN_H
+#ifndef WEAKEN_H
+#define WEAKEN_H
 
 #include "../ability.h"
-#include <string>
 
 using namespace std;
 
+
 class Weaken: public Ability {
-    virtual bool Effect(Player& player, Game::Cell& target) override;
+    virtual bool Effect(Cell& target) override;
 public:
-    string getName() override;
+    Weaken(Player& caster);
 };
 
 #endif

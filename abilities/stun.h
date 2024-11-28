@@ -1,15 +1,14 @@
-#ifndef DOWNLOAD_H
-#define DOWNLOAD_H     
+#ifndef STUN_H
+#define STUN_H
 
 #include "../ability.h"
 
 using namespace std;
 
-
-class Download: public Ability {
+class Stun: public Ability {
     virtual bool Effect(Cell& target) override;
 public:
-    Download(Player& caster);
+    Stun(Player& caster);
 };
 
 #endif

@@ -1,9 +1,14 @@
 #include "firewall.h"
-#include <string>
-
+#include "../build.h"
+#include "../player.h"
 using namespace std;
 
-bool Firewall::Effect(Player& player, Game::Cell& target) {
+Firewall::Firewall(Player& caster) 
+    : Ability(caster) {
+    id = 3;
+}   
+
+bool Firewall::Effect(Cell& target) {
     if (target.link != nullptr) {
         return false;
     }
@@ -12,10 +17,7 @@ bool Firewall::Effect(Player& player, Game::Cell& target) {
         return false;
     }
     //set the build on the cell
-    target.build = Game::Build::buildFirewall(player);
+    target.build = Build::buildFirewall(getCaster().getPlayerNum());
     return true;
 }
 
-string Firewall::getName() {
-    return "firewall";
-}

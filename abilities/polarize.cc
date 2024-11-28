@@ -1,9 +1,13 @@
 #include "polarize.h"
-#include <string>
-
+#include "../player.h"
 using namespace std;
 
-bool Polarize::Effect(Player& player, Game::Cell& target) {
+Polarize::Polarize(Player& caster) 
+    : Ability(caster) {
+    id = 5;
+}
+
+bool Polarize::Effect(Cell& target) {
     if (target.link == nullptr) {
         return false;
     }
@@ -11,6 +15,3 @@ bool Polarize::Effect(Player& player, Game::Cell& target) {
     return true;
 }
 
-string Polarize::getName() {
-    return "polarize";
-}

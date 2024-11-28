@@ -14,15 +14,15 @@ using namespace std;
 //Player can set up their 5 abilities
 //abilities is a string of 5 characters, each representing an ability
 void abilitySetup(unique_ptr<Game>& g, size_t playerNum, string abilities) {
-    Player* pl = g->getPlayer(playerNum);
+    Player& pl = g->getPlayer(playerNum);
     for (size_t i = 0; i < 5; i++) {
-        pl->addAbility(abilities[i], i);
+        pl.addAbility(abilities[i]);
     }
 }
 
 //Player sets up where they want their links on the board before game starts
 void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
-    Player* pl = g->getPlayer(playerNum);
+    Player& pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
     char base;
@@ -33,13 +33,13 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
         input >> word;
         char type = word[0];
         int strength = word[1] - '0';
-        pl->setLink(type, strength, (base + id));
+        pl.setLink(type, strength, (base + id));
     }
 }
 
 //This options allows the player to let the game randomly decide where the links go on the board
 void linkSetupRandom(Game& g, size_t playerNum) {
-    Player* pl = g.getPlayer(playerNum);
+    Player& pl = g.getPlayer(playerNum);
     // 4 Data links and 4 Virus links
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
@@ -53,47 +53,47 @@ void linkSetupRandom(Game& g, size_t playerNum) {
     for (size_t id = 0; id < 8; id++) {
         char type = linkVals[id][0];
         int strength = linkVals[id][1] - '0';
-        pl->setLink(type, strength, (base + id));
+        pl.setLink(type, strength, (base + id));
     }
 }
 
 //Creates the grid board that the game will take place on
 void gridSetup(Game& g) {
-    Player* p1 = g.getPlayer(1);
-    Player* p2 = g.getPlayer(2);
+    Player& p1 = g.getPlayer(1);
+    Player& p2 = g.getPlayer(2);
 
     size_t row = 1;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
-            g.getCell(row, col).link = &p1->getPlLink(col);
-            p1->getPlLink(col).setCoord(row, col);
+            g.getCell(row, col).link = &p1.getPlLink(col);
+            p1.getPlLink(col).setCoord(row, col);
         }
     }
     for (size_t col = 4; col <= 5; col++) {
-        g.getCell(row, col).build->buildServer(*p1);
+        g.getCell(row, col).build->buildServer(p1.getPlayerNum());
     }
 
     row = 2;
     for (size_t col = 4; col <= 5; col++) {
-        g.getCell(row, col).link = &p1->getPlLink(col);
-        p1->getPlLink(col).setCoord(row, col);
+        g.getCell(row, col).link = &p1.getPlLink(col);
+        p1.getPlLink(col).setCoord(row, col);
     }
 
     row = 7;
     for (size_t col = 4; col <= 5; col++) {
-        g.getCell(row, col).link = &p2->getPlLink(col);
-        p2->getPlLink(col).setCoord(row, col);
+        g.getCell(row, col).link = &p2.getPlLink(col);
+        p2.getPlLink(col).setCoord(row, col);
     }
 
     row = 8;
     for (size_t col = 1; col <= 8; col++) {
         if (col != 4 && col != 5) {
-            g.getCell(row, col).link = &p2->getPlLink(col);
-            p2->getPlLink(col).setCoord(row, col);
+            g.getCell(row, col).link = &p2.getPlLink(col);
+            p2.getPlLink(col).setCoord(row, col);
         }
     }
     for (size_t col = 4; col <= 5; col++) {
-        g.getCell(row, col).build->buildServer(*p2);
+        g.getCell(row, col).build->buildServer(p2.getPlayerNum());
     }
 }
 

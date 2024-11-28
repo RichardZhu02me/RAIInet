@@ -1,16 +1,17 @@
-#ifndef SCAN_H
-#define SCAN_H
+#ifndef MURDER_H
+#define MURDER_H
 
 #include "../ability.h"
-#include <string>
+#include "../game.h"  // Add this include
+
 
 using namespace std;
 
 class Murder: public Ability {
     //kill the target in the cell if there is a player's link nearby
-    virtual bool Effect(Player& player, Game::Cell& target) override;
+    virtual bool Effect(Cell& target) override;
 public:
-    string getName() override;
+    Murder(Player& caster);
 };
 
 #endif

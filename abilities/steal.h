@@ -1,15 +1,14 @@
-#ifndef DOWNLOAD_H
-#define DOWNLOAD_H     
+#ifndef STEAL_H
+#define STEAL_H
 
 #include "../ability.h"
 
 using namespace std;
 
-
-class Download: public Ability {
+class Steal: public Ability {
     virtual bool Effect(Cell& target) override;
 public:
-    Download(Player& caster);
+    Steal(Player& caster);
 };
 
 #endif

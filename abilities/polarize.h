@@ -2,14 +2,14 @@
 #define POLARIZE_H
 
 #include "../ability.h"
-#include <string>
+#include "../game.h"  // Add this include
 
 using namespace std;
 
 class Polarize: public Ability {
-    virtual bool Effect(Player& player, Game::Cell& target) override;
+    virtual bool Effect(Cell& target) override;
 public:
-    string getName() override;
+    Polarize(Player& caster);   
 };
 
 #endif

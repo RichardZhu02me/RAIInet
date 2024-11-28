@@ -1,31 +1,30 @@
 #ifndef ABILITY_H
 #define ABILITY_H
 
-#include "game.h"
-#include "player.h"
+#include "cell.h"
 #include <string>
+#include <map>
+
 using namespace std;
 
+class Player;
+
 class Ability {
+protected:
+    int id;
+    Player& getCaster() const;
 private:
-    //the effect of the ability
-    //return true if the effect was applied successfully
-    //return false otherwise    
-   virtual bool Effect(Player& player, Game::Cell& target)=0;
-   bool available = true;
-   int id;
-   string name;
+    virtual bool Effect(Cell& target)=0;
+    bool available;
+    Player* caster;
 public:
-    //cast the ability on the target cell
-    //return true if the ability was cast successfully
-    //return false otherwise
-    virtual bool cast(Player& player, Game::Cell& target);
+    Ability(Player& caster);
+    virtual bool cast(Cell& target);
+    const static map<int, string> abilityLibrary;
 
     bool getAvailable() const;
     void setUnavailable();
     int getId() const;
-    //size_t getId() const;
-    virtual string getName();
 };
 
 #endif

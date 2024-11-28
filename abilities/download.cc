@@ -1,16 +1,17 @@
 #include "download.h"
-#include <string>
-
+#include "../player.h"
 using namespace std;
 
-bool Download::Effect(Player& player, Game::Cell& target) {
+Download::Download(Player& caster) 
+    : Ability(caster) {
+    id = 4;
+}
+
+bool Download::Effect(Cell& target) {
     if (target.link == nullptr) {
         return false;
     }
-    player.download(target.link);
+    getCaster().download(target.link);
     return true;
 }
 
-string Download::getName() {
-    return "download";
-}

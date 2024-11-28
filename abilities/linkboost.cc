@@ -1,16 +1,16 @@
 #include "linkboost.h"
-#include <string>
-
+#include "../player.h"
 using namespace std;
 
-bool LinkBoost::Effect(Player& player, Game::Cell& target) {
+LinkBoost::LinkBoost(Player& caster) 
+    : Ability(caster) {
+    id = 1;
+}   
+
+bool LinkBoost::Effect(Cell& target) {
     if (target.link == nullptr) {
         return false;
     }
     target.link->boost();
     return true;
 } 
-
-string LinkBoost::getName() {
-    return "linkboost";
-}

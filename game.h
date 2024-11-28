@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include "cell.h"
 #include "link.h"
 #include "player.h"
 #include "ability.h"
@@ -14,24 +15,7 @@ public:
     static const int BOARD_SIZE;
     static const int MAX_PLAYERS;
     static const int MAX_LINK_DISTANCE;
-    static const map<string, string> ABILITIES;
-    class Build {
-        int playerId;
-        Player* player;
-        string structureName;
-    public:
-        int getPlayerId() const;
-        Player* getPlayer() const;
-        string getStructureName() const;
-        static Build* buildFirewall(Player& player);
-        static Build* buildServer(Player& player);
-    };
-    struct Cell {
-        Link* link;
-        bool firewall;
-        bool server;
-        Build* build;        
-    };
+    static const map<string, int> ABILITIES;
     Game();
     ~Game() override;
 
@@ -49,7 +33,7 @@ public:
     void removeLink(Cell& target);
 
     void endTurn();
-    Player* getPlayer(int playerNum) const;
+    Player& getPlayer(int playerNum) const;
     void win(int playerNum);
     void loss(int playerNum);
     void displayAbilities(int playerNum);
@@ -57,7 +41,7 @@ public:
 
 private:
    void downloadLink(int playerNum, string type);
-   vector<vector<Cell>> theBoard;
+   vector<vector<unique_ptr<Cell>>> theBoard;
    vector<unique_ptr<Player>> players;
    int playerTurn;
    bool playerCastedAbility;

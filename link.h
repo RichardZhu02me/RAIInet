@@ -3,32 +3,31 @@
 #define LINK_H
 
 #include <string>
-class Player;
 
+using namespace std;
 class Link {
-    std::string type; // "data" or "virus"
+    string type; // "data" or "virus"
     int travelDistance;
     int strength;
     bool revealed;
     char symbol;
-    Player* owner;
+    int ownerId;
     size_t row;
     size_t col;
 
 public:
-    Link(const std::string& type, int strength, char symbol, Player* owner);
+    Link(const string& type, int strength, char symbol, int ownerId);
     ~Link();
     bool fightWon(Link& opponent) const;
     void changeType();
     bool isRevealed() const;
     void reveal();
-    const std::string& getType() const;
+    const string& getType() const;
     int getStrength() const;
     int getTravelDistance() const;
     char getSymbol() const;
-    Player* getOwner() const;
+    int getOwnerId() const;
     bool boost();
-
     size_t getX() const;
     size_t getY() const;
 
