@@ -7,6 +7,7 @@
 #include "game.h"
 #include "player.h"
 #include "textdisplay.h"
+//#include "graphicsdisplay.h"
 
 using namespace std;
 
@@ -152,8 +153,7 @@ int main(int argc, char* argv[]) {
     }
 
     gridSetup(*g);
-    unique_ptr<TextDisplay> t{new TextDisplay{&g}};
-    g->attach(t);
+    g->attach(new TextDisplay(*g));
     g->runGame();
 
     //delete everything if need be

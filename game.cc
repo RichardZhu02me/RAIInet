@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <string>
 #include "game.h"
 #include <map>
 #include <typeinfo> 
@@ -369,8 +370,7 @@ void Game::runCommand(string command) {
         string abilityName = getPlayer(playerTurn)->getAbility(abilityNum)->getName();
         size_t x, y;
         if (abilityName == "linkboost" || abilityName == "download" ||
-            abilityName == "polarize" || abilityName == "scan") {
-            
+                abilityName == "polarize" || abilityName == "scan") {
             string link;
             char linkChar;
             ss >> link;
@@ -378,7 +378,6 @@ void Game::runCommand(string command) {
             Link linkRef = getLink(linkChar);
             x = linkRef.getX();
             y = linkRef.getY();
-
         } else if (abilityName == "firewall") {
             ss >> x >> y;
         }
@@ -390,7 +389,9 @@ void Game::runCommand(string command) {
     } else if(action == "board") {
         notifyObservers();
     } else if (action == "sequence") {
-        //implement sequence command
+        ss >> fileName;
+        useSequence = true; //please don't put sequence in sequence, have not accounted for this
+        useSequenceFirst = true;
     } else if (action == "quit") {
         playerMovedLink = true;
         gameOver = true;
@@ -415,17 +416,35 @@ void Game::checkWin() {
 
 void Game::runGame() {
     while (!gameOver) {
+        string command;
+        ifstream input;
+        if (useSequenceFirst) {
+            ifstream input(fileName);
+            getline(input, command);
+            useSequenceFirst = false;
+            if (input.eof()) {
+                useSequence = false;
+            }
+        } else if (useSequence) {
+            getline(input, command);
+            if (input.eof()) {
+                useSequence = false;
+            }
+        }
         while(!playerMovedLink) {
-            string command;
-            getline(cin, command);
-            runCommand(command);
-            checkWin();
+            if (!useSequence) {
+                getline(cin, command);
+                runCommand(command);
+                checkWin();
+            } else {
+                runCommand(command);
+                checkWin();
+            }
         }
 
         playerMovedLink == false;
         if (playerTurn = 1) playerTurn = 2;
         else if (playerTurn = 2) playerTurn = 1;
-        notifyObservers();
     }
 
 }

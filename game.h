@@ -63,6 +63,9 @@ private:
    bool playerCastedAbility;
    bool playerMovedLink;
    bool gameOver;
+   string fileName;
+   bool useSequence = false;
+   bool useSequenceFirst = false;
 };
 
 #endif

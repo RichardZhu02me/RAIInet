@@ -6,10 +6,10 @@
 #include <iostream>
 
 class TextDisplay : public Observer {
-    Game* g;
+    Game& g;
 
  public:
-    TextDisplay(Game* g);
+    TextDisplay(Game& g);
     void notify() override;
     ~TextDisplay() override;
 };
