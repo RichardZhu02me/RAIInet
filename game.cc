@@ -139,19 +139,19 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(*theBoard[y-travelDistance][x]->link)) {
-                        removeLink(*theBoard[y][x]);
-                        theBoard[y-travelDistance][x]->link->setCoord(100, 100);
-                        theBoard[y-travelDistance][x]->link = linkRef;
-                        linkRef->setCoord(x, y-1);
-                        downloadLink(playerTurn, linkRef->getType());
-                        return true;
-                    } else {
+                    //if (linkRef->fightWon(*theBoard[y-travelDistance][x]->link)) {
+                    //    removeLink(*theBoard[y][x]);
+                    //    theBoard[y-travelDistance][x]->link->setCoord(100, 100);
+                    //    theBoard[y-travelDistance][x]->link = linkRef;
+                    //    linkRef->setCoord(x, y-1);
+                    //    downloadLink(playerTurn, linkRef->getType());
+                    //    return true;
+                    //} else {
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         downloadLink(otherPlayerNum, theBoard[y-travelDistance][x]->link->getType());
                         return true;
-                    }
+                    //}
                 }
             } else if (playerTurn == 1) {
                 downloadLink(1, linkRef->getType());
@@ -190,19 +190,19 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(*theBoard[y+travelDistance][x]->link)) {
-                        removeLink(*theBoard[y][x]);
-                        theBoard[y+travelDistance][x]->link->setCoord(100, 100);
-                        theBoard[y+travelDistance][x]->link = linkRef;
-                        linkRef->setCoord(x, y+1);
-                        downloadLink(playerTurn, linkRef->getType());
-                        return true;
-                    } else {
+                    //if (linkRef->fightWon(*theBoard[y+travelDistance][x]->link)) {
+                    //    removeLink(*theBoard[y][x]);
+                    //    theBoard[y+travelDistance][x]->link->setCoord(100, 100);
+                    //    theBoard[y+travelDistance][x]->link = linkRef;
+                    //    linkRef->setCoord(x, y+1);
+                    //    downloadLink(playerTurn, linkRef->getType());
+                    //    return true;
+                    //} else {
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         downloadLink(otherPlayerNum, theBoard[y+travelDistance][x]->link->getType());
                         return true;
-                    }
+                    //}
                 }
             } else if (playerTurn == 0) {
                 downloadLink(0, linkRef->getType());
@@ -246,19 +246,19 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(*theBoard[y][x-travelDistance]->link)) {
-                        removeLink(*theBoard[y][x]);
-                        theBoard[y][x-travelDistance]->link->setCoord(100, 100);
-                        theBoard[y][x-travelDistance]->link = linkRef;
-                        linkRef->setCoord(x-1, y);
-                        downloadLink(playerTurn, linkRef->getType());
-                        return true;
-                    } else {
+                    //if (linkRef->fightWon(*theBoard[y][x-travelDistance]->link)) {
+                    //    removeLink(*theBoard[y][x]);
+                    //    theBoard[y][x-travelDistance]->link->setCoord(100, 100);
+                    //    theBoard[y][x-travelDistance]->link = linkRef;
+                    //    linkRef->setCoord(x-1, y);
+                    //    downloadLink(playerTurn, linkRef->getType());
+                    //    return true;
+                    //} else {
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         downloadLink(otherPlayerNum, theBoard[y][x-travelDistance]->link->getType());
                         return true;
-                    }
+                    //}
                 }
             } else {
                 cout << "INVALID MOVEMENT!" << endl;
@@ -296,19 +296,19 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 } else {
-                    if (linkRef->fightWon(*theBoard[y][x+travelDistance]->link)) {
-                        removeLink(*theBoard[y][x]);
-                        theBoard[y][x+travelDistance]->link->setCoord(100, 100);
-                        theBoard[y][x+travelDistance]->link = linkRef;
-                        linkRef->setCoord(x-1, y);
-                        downloadLink(playerTurn, linkRef->getType());
-                        return true;
-                    } else {
+                    //if (linkRef->fightWon(*theBoard[y][x+travelDistance]->link)) {
+                    //    removeLink(*theBoard[y][x]);
+                    //    theBoard[y][x+travelDistance]->link->setCoord(100, 100);
+                    //    theBoard[y][x+travelDistance]->link = linkRef;
+                    //    linkRef->setCoord(x-1, y);
+                    //    downloadLink(playerTurn, linkRef->getType());
+                    //    return true;
+                    //} else {
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         downloadLink(otherPlayerNum, theBoard[y][x+travelDistance]->link->getType());
                         return true;
-                    }
+                    //}
                 }
             } else {
                 cout << "INVALID MOVEMENT!" << endl;
