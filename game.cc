@@ -21,13 +21,6 @@ using namespace std;
 const int Game::BOARD_SIZE = 8;
 const int Game::MAX_PLAYERS = 2;
 const int Game::MAX_LINK_DISTANCE = 2;
-const map<string,int> Game::ABILITIES = {
-    {"linkboost", 1},
-    {"firewall", 2},
-    {"download", 3},
-    {"polarity", 4},
-    {"scan", 5}
-};
 
 Game::Game() {
     theBoard.resize(BOARD_SIZE);
@@ -214,6 +207,11 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
         cout << "LINK IS OFF THE BOARD" << endl;
         return false;
     }
+    //check if the link is stunned
+    if (linkRef->getStunDuration() > 0) {
+        cout << "LINK IS STUNNED" << endl;
+        return false;
+    }
 
     // Check if allowed to move link
     if (linkRef->getOwnerId() != playerTurn)
@@ -261,6 +259,7 @@ void Game::removeLink(Cell& target) {
 }
 
 void Game::endTurn() {
+    getPlayer(playerTurn).reduceStunned();
     playerTurn++;
     playerTurn %= players.size();
     playerCastedAbility = false;
@@ -330,7 +329,8 @@ void Game::runCommand(string command) {
         string abilityName = a.getName();
         size_t x, y;
         if (abilityName == "Link Boost" || abilityName == "Download" ||
-                abilityName == "Polarize" || abilityName == "Scan") {
+                abilityName == "Polarize" || abilityName == "Scan" || abilityName == "Murder" || abilityName == "Weaken"
+                || abilityName == "Stun" ) {
             string link;
             char linkChar;
             if (!(ss >> link)) {
@@ -352,7 +352,10 @@ void Game::runCommand(string command) {
         }
         if (castAbility(abilityNum,getCell(y, x))) {
             playerCastedAbility = true;
-            cout << "ABILITY CAST SUCCESSFUL" << endl;
+            cout << "CAST SUCCESSFUL!" << endl;
+        }
+        else {
+            cout << "CAST FAILED!" << endl;
         }
 
     } else if(action == "abilities") {

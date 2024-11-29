@@ -15,7 +15,7 @@ class Link {
     int ownerId;
     size_t row;
     size_t col;
-
+    int stunned;
 public:
     Link(const string& type, int strength, char symbol, int ownerId);
     ~Link();
@@ -35,6 +35,9 @@ public:
     void deactivate();
     void setCoord(size_t y, size_t x);
     void weaken(int amount);
+    void setStunned(int turns);
+    void reduceStunned();
+    int getStunDuration() const;
 };
 
 #endif // LINK_H

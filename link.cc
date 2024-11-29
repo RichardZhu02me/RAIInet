@@ -1,8 +1,8 @@
 // Link.cc
 #include "link.h"
-
+#include <iostream>
 Link::Link(const std::string& type, int strength, char symbol, int ownerId) :
-    type(type), travelDistance(1), strength(strength), revealed(false), active(true), symbol(symbol), ownerId(ownerId) {}
+    type(type), travelDistance(1), strength(strength), revealed(false), active(true), symbol(symbol), ownerId(ownerId), stunned(0) {}
 
 Link::~Link(){}
 
@@ -71,5 +71,17 @@ void Link::setCoord(size_t y, size_t x) {
 }
 
 void Link::weaken(int amount) {
-    strength -= strength - amount < 0 ? 0 : strength - amount;
+    strength = strength - amount < 0 ? 0 : strength - amount;
+}
+
+void Link::setStunned(int turns) {
+    stunned = turns;
+}
+
+void Link::reduceStunned() {
+    stunned = stunned - 1 < 0 ? 0 : stunned - 1;
+}
+
+int Link::getStunDuration() const {
+    return stunned;
 }

@@ -48,6 +48,7 @@ static const map<char, string> abilityLibrary = {
         {'X', "Steal"}, // steal is not implemented, will steal an opponent's link
         {'C', "Stun"}, // stun is not implemented, will stop an opponent from moving the unit for two turns
         {'W', "Weaken"}, 
+        {'M', "Murder"}
 };
 
 

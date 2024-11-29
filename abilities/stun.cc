@@ -12,6 +12,8 @@ bool Stun::Effect(Cell& target, bool debug) {
         if (debug) cout << "TARGET HAS NO LINK OR IS OWNED BY THE CASTER!" << endl;
         return false;
     }
-    // TODO: Implement stun effect
+    if (debug) cout << "STUNNING TARGET" << endl;
+    target.link->setStunned(3);
+    if (debug) cout << "TARGET STUNNED" << endl;
     return true;
-} 
+}

@@ -12,6 +12,8 @@ bool Murder::Effect(Cell& target, bool debug) {
         if (debug) cout << "TARGET HAS NO LINK OR IS NOT OWNED BY THE CASTER!" << endl;
         return false;
     }
-    // Implement murder effect here
+    target.link->deactivate();
+    target.link = nullptr;
+    if (debug) cout << "MURDER SUCCESSFUL" << endl;
     return true;
 }
