@@ -367,10 +367,13 @@ void Game::runCommand(string command) {
     string action;
     ss >> action;
     if(action == "move") {
-        char direction;
-        ss >> direction;
         char l;
         ss >> l;
+        Link& linkRef = getLink(l);
+        int x = linkRef.getX();
+        int y = linkRef.getY();
+        char direction;
+        ss >> direction;
         Link& linkRef = getLink(l);
         int x = linkRef.getX();
         int y = linkRef.getY();
