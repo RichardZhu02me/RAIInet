@@ -68,15 +68,12 @@ void linkSetupRandom(Game& g, size_t playerNum) {
 void gridSetup(Game& g) {
     Player& p1 = g.getPlayer(0);
     Player& p2 = g.getPlayer(1);
-    
-    cout << "BRUH1" << endl;
 
     size_t row = 0;
     //  places a link ???
     for (size_t col = 0; col < 8; col++) {
         if (col != 3 && col != 4)
         {
-            cout << col << endl;
             g.getCell(row, col).link = &p1.getPlLink(col);
             p1.getPlLink(col).setCoord(row, col);
         }
@@ -154,7 +151,6 @@ int main(int argc, char* argv[])
             graphics = true;
         }
     }
-    cout << "past arguments " << endl;
     if (!ab1setup) {
         abilitySetup(g, 0, DEFAULTAB);
     }
@@ -162,7 +158,7 @@ int main(int argc, char* argv[])
     if (!ab2setup) {
         abilitySetup(g, 1, DEFAULTAB);
     }
-    cout << "past ability setup " << endl;
+    //cout << "past ability setup " << endl;
     if (!links1setup) {
         linkSetupRandom(*g, 0);
     }
@@ -170,11 +166,11 @@ int main(int argc, char* argv[])
     if (!links2setup) {
         linkSetupRandom(*g, 1);
     }
-    cout << "past link setup " << endl;
+    //cout << "past link setup " << endl;
     gridSetup(*g);
-    cout << "past grid setup " << endl;
+    //cout << "past grid setup " << endl;
     g->attach(new TextDisplay(*g));
-    cout << "past text display " << endl;
+    //cout << "past text display " << endl;
     g->runGame();
 
 

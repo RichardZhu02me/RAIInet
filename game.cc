@@ -206,9 +206,9 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
     int travelDistance = linkRef->getTravelDistance();
     int otherPlayerNum = (playerTurn == 0) ? 1 : 0;
 
-    // Check link is owned by 
+    // Check link is owned by player
     if(linkRef->getOwnerId() != playerTurn) {
-        cout << "LINK IS NOT OWNED BY CURRENT PLAYER" << endl;
+        cout << "LINK IS NOT OWNED BY PLAYER" << endl;
         return false;
     }
     //check if the link is active
@@ -355,7 +355,7 @@ void Game::runCommand(string command) {
 void Game::checkWin() {
     int otherPlayerNum = (playerTurn == 0) ? 1 : 0;
 
-    cout << "playerTurn" << playerTurn << endl;
+    // cout << "playerTurn" << playerTurn << endl;
 
     if (getPlayer(playerTurn).getNumOfDataDld() == 4 ||
             getPlayer(otherPlayerNum).getNumOfVirusDld() == 4) {
@@ -406,4 +406,8 @@ void Game::runGame() {
 Player &Game::getPlayer(int playerNum) const {
     // cout << "Getting Player Number: " << playerNum << endl;
     return *players[playerNum];
+}
+
+int Game::getPlayerTurn(){
+    return playerTurn;
 }
