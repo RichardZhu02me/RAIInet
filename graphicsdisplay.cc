@@ -76,4 +76,3 @@ void GraphicsDisplay::notify() {
 }
 
   GraphicsDisplay::~GraphicsDisplay() {}
-  
