@@ -7,7 +7,7 @@
 #include "game.h"
 #include "player.h"
 #include "textdisplay.h"
-// #include "graphicsdisplay.h"
+#include "graphicsdisplay.h"
 
 using namespace std;
 

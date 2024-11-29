@@ -25,20 +25,24 @@ bool Ability::cast(Cell& target, bool debug) {
     return false;
 }
 
+//destructor for the ability
 Ability::~Ability() = default;
 
+//get whether the ability is available to be cast
 bool Ability::getAvailable() const {
     return available;
 }
-
+//set the ability to be unavailable
 void Ability::setUnavailable() {
     available = false;
 }
 
+//get the caster of the ability
 Player& Ability::getCaster() const {
     return *caster;
 }
 
+//the library of abilities
 static const map<char, string> abilityLibrary = {
         {'L', "Link Boost"},
         {'S', "Scan"},

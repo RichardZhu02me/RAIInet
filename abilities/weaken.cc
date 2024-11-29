@@ -15,7 +15,6 @@ bool Weaken::Effect(Cell& target, bool debug) {
     }
     int random = (rand() % 4) + 1;
     target.link->setStunned(1);
-    // do we want to reveal the link to the Game or the player?
-    target.link->weaken(3);
+    target.link->weaken(random);
     return true;
 }
