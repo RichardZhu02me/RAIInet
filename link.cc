@@ -2,7 +2,7 @@
 #include "link.h"
 
 Link::Link(const std::string& type, int strength, char symbol, int ownerId) :
-    type(type), travelDistance(1), strength(strength), revealed(false), symbol(symbol), ownerId(ownerId){}
+    type(type), travelDistance(1), strength(strength), revealed(false), symbol(symbol), ownerId(ownerId), active(true) {}
 
 Link::~Link(){}
 
@@ -26,6 +26,14 @@ void Link::reveal() {
 
 const std::string& Link::getType() const {
     return type;
+}
+
+bool Link::getActive() const {
+    return active;
+}
+
+void Link::deactivate() {
+    active = false;
 }
 
 int Link::getStrength() const {

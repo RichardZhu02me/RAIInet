@@ -10,6 +10,7 @@ class Link {
     int travelDistance;
     int strength;
     bool revealed;
+    bool active;
     char symbol;
     int ownerId;
     size_t row;
@@ -30,7 +31,8 @@ public:
     bool boost();
     size_t getX() const;
     size_t getY() const;
-
+    bool getActive() const;
+    void deactivate();
     void setCoord(size_t y, size_t x);
     void weaken(int amount);
 };

@@ -29,7 +29,10 @@ public:
     void runCommand(string command);
     void runGame();
     bool castAbility(int index, Cell& target);
+    //move the link to the target cell
     bool moveLink(size_t x, size_t y, Link* linkRef, char direction);
+    //helper function for moveLink
+    bool moveLinkHelper(int y, int x, Link* linkRef);
     void removeLink(Cell& target);
 
     void endTurn();

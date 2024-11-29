@@ -20,8 +20,10 @@ Player::~Player(){}
 void Player::download(bool isData) {
     if (isData) {
         downloadedData++;
+        cout << "DOWNLOADED DATA, current data: " << downloadedData << endl;
     } else {
         downloadedViruses++;
+        cout << "DOWNLOADED VIRUS, current viruses: " << downloadedViruses << endl;
     }
 }
 
