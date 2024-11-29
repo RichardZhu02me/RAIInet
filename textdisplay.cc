@@ -8,6 +8,8 @@ using namespace std;
 TextDisplay::TextDisplay(Game& g): g{g} {}
 
 void TextDisplay::notify() {
+    int playerTurn = g.getPlayerTurn();
+    int otherPlayer = (playerTurn == 0) ? 1 : 0;
     cout << "Player 1:" << endl;
 
     cout << "Downloaded: " << g.getPlayer(0).getNumOfDataDld() << "D, "
@@ -16,12 +18,23 @@ void TextDisplay::notify() {
     cout << "Abilities: " << g.getPlayer(0).getNumOfAbLeft() << endl;
 
     char base = 'a';
-    for (int i = 0; i < 8; i++) {
-        char currBase = base + i;
-        char currChar = static_cast<char>(currBase);
-        char charType = g.getPlayer(0).getPlLink(i).getType() == "data" ? 'D' : 'V';
-        cout << currChar << ": " << charType << g.getPlayer(0).getPlLink(i).getStrength() << " ";
-        if (i == 3 || i == 7) cout << endl;
+    for (int i = 0; i < 8; i++)
+    {
+        if (playerTurn == 1 && !(g.getPlayer(otherPlayer).getPlLink(i).isRevealed()))
+        {
+            int currBase = base + i;
+            char currChar = static_cast<char>(currBase);
+            cout << currChar << ": ?  ";
+        }
+        else
+        {
+            int currBase = base + i;
+            char currChar = static_cast<char>(currBase);
+            char charType = g.getPlayer(0).getPlLink(i).getType() == "data" ? 'D' : 'V';
+            cout << currChar << ": " << charType << g.getPlayer(0).getPlLink(i).getStrength() << " ";
+        }
+        if (i == 3 || i == 7)
+            cout << endl;
     }
 
     cout << "========" << endl;
@@ -44,7 +57,7 @@ void TextDisplay::notify() {
 
     base = 'A';
     for (int i = 0; i < 8; i++) {
-        if (!(g.getPlayer(1).getPlLink(i).isRevealed())) {
+        if (playerTurn == 0 && !(g.getPlayer(otherPlayer).getPlLink(i).isRevealed())) {
             int currBase = base + i;
             char currChar = static_cast<char>(currBase);
             cout << currChar << ": ?  ";
@@ -58,4 +71,4 @@ void TextDisplay::notify() {
     }
 }
 
-  TextDisplay::~TextDisplay() {}
+TextDisplay::~TextDisplay() {}

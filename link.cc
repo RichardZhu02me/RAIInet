@@ -2,7 +2,7 @@
 #include "link.h"
 
 Link::Link(const std::string& type, int strength, char symbol, int ownerId) :
-    type(type), travelDistance(1), strength(strength), revealed(false), symbol(symbol), ownerId(ownerId), active(true) {}
+    type(type), travelDistance(1), strength(strength), revealed(false), active(true), symbol(symbol), ownerId(ownerId) {}
 
 Link::~Link(){}
 

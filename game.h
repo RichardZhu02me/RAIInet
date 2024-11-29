@@ -42,14 +42,16 @@ public:
     void displayAbilities(int playerNum);
     void checkWin();
 
+    int getPlayerTurn();
+
 private:
     vector<unique_ptr<Player>> players;
     void downloadLink(int playerNum, Link& link);
     vector<vector<unique_ptr<Cell>>> theBoard;
-    int playerTurn;
     bool playerCastedAbility;
     bool playerMovedLink;
     bool gameOver;
+    int playerTurn;
     string fileName;
     bool useSequence = false;
     bool useSequenceFirst = false;
