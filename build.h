@@ -22,4 +22,5 @@ public:
     static unique_ptr<Build> buildServer(int playerId);
 };
 
-#endif 
+#endif
+ 

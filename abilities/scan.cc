@@ -17,4 +17,3 @@ bool Scan::Effect(Cell& target, bool debug) {
     target.link->reveal();
     return true;
 }
-

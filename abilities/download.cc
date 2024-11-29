@@ -19,4 +19,3 @@ bool Download::Effect(Cell& target, bool debug) {
     if (debug) cout << "DOWNLOAD SUCCESSFUL" << endl;
     return true;
 }
-

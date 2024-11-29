@@ -25,4 +25,3 @@ bool Firewall::Effect(Cell& target, bool debug) {
     cout << "FIREWALL BUILT!" << endl;
     return true;
 }
-
