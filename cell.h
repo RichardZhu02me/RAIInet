@@ -40,6 +40,11 @@ struct Cell {
         }
         return *this;
     }
+
+    void buildServer(int PlayerId) {
+        build = Build::buildServer(PlayerId);
+        server = true;
+    }
 };
 
 #endif

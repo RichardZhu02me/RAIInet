@@ -40,16 +40,16 @@ public:
     void checkWin();
 
 private:
-   void downloadLink(int playerNum, string type);
-   vector<vector<unique_ptr<Cell>>> theBoard;
-   vector<unique_ptr<Player>> players;
-   int playerTurn;
-   bool playerCastedAbility;
-   bool playerMovedLink;
-   bool gameOver;
-   string fileName;
-   bool useSequence = false;
-   bool useSequenceFirst = false;
+    vector<unique_ptr<Player>> players;
+    void downloadLink(int playerNum, string type);
+    vector<vector<unique_ptr<Cell>>> theBoard;
+    int playerTurn;
+    bool playerCastedAbility;
+    bool playerMovedLink;
+    bool gameOver;
+    string fileName;
+    bool useSequence = false;
+    bool useSequenceFirst = false;
 };
 
 #endif

@@ -4,7 +4,16 @@
 #include <iostream>
 using namespace std;
 
-Player::Player(int number) : playerNum{number},downloadedData{0},downloadedViruses{0},availableAbilities{0} {}
+Player::Player(int number) : playerNum{number},downloadedData{0},downloadedViruses{0},availableAbilities{5} {
+
+    cout << "CREATING PLAYER " << number << endl;
+    // cout << "Number " << playerNum << endl;
+    // char base = 'a';
+    // setLink('V', 5 ,(base));
+    playerNum = number;
+
+    // Initiallize Links
+}
 
 Player::~Player(){}
 
@@ -22,10 +31,11 @@ bool Player::isHidden(int linkIndex) const {
     }
     return !links[linkIndex]->isRevealed();
 }
-
+ 
 
 void Player::setLink(char type, int strength, char symbol) {
     std::string linkType = (type == 'D') ? "data" : "virus";
+
     links.emplace_back(std::make_unique<Link>(linkType, strength, symbol, playerNum));
 }
 
@@ -68,6 +78,8 @@ Ability& Player::getAbility(size_t id) {
 }
 
 bool Player::addAbility(int id) {
+    // cout << "BRUH" << endl;
+    // cout << downloadedViruses<< endl;
     unique_ptr<Ability> newAbility;
     switch (id) {
         case 1:

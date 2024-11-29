@@ -14,14 +14,16 @@ using namespace std;
 //Player can set up their 5 abilities
 //abilities is a string of 5 characters, each representing an ability
 void abilitySetup(unique_ptr<Game>& g, size_t playerNum, string abilities) {
-    Player& pl = g->getPlayer(playerNum);
+    Player &pl = g->getPlayer(playerNum);
+    
     for (size_t i = 0; i < 5; i++) {
         pl.addAbility(abilities[i]);
     }
 }
 
 //Player sets up where they want their links on the board before game starts
-void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
+void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile)
+{
     Player& pl = g->getPlayer(playerNum);
     ifstream input(linkFile);
     string word;
@@ -39,66 +41,84 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile) {
 
 //This options allows the player to let the game randomly decide where the links go on the board
 void linkSetupRandom(Game& g, size_t playerNum) {
-    Player& pl = g.getPlayer(playerNum);
+
+    Player &pl = g.getPlayer(playerNum);
+
     // 4 Data links and 4 Virus links
     vector<string> linkVals = {"D1", "D2", "D3", "D4", "V1", "V2", "V3", "V4"};
     random_device rd;
     mt19937 gen(rd());
     char base;
     if (playerNum == 1) base = 'a';
-    else base = 'A';
+    else
+        base = 'A';
 
     shuffle(linkVals.begin(), linkVals.end(), gen);
 
-    for (size_t id = 0; id < 8; id++) {
+    for (size_t id = 0; id < 8; id++)
+    {
         char type = linkVals[id][0];
         int strength = linkVals[id][1] - '0';
+        // cout << "Values " << type <<" "<< strength<< " "<<(base + id) << "Player Num"<< pl.getPlayerNum() << endl;
         pl.setLink(type, strength, (base + id));
+        // cout << playerNum << endl;
     }
 }
 
 //Creates the grid board that the game will take place on
 void gridSetup(Game& g) {
-    Player& p1 = g.getPlayer(1);
-    Player& p2 = g.getPlayer(2);
+    Player& p1 = g.getPlayer(0);
+    Player& p2 = g.getPlayer(1);
+    
+    cout << "BRUH1" << endl;
 
-    size_t row = 1;
-    for (size_t col = 1; col <= 8; col++) {
-        if (col != 4 && col != 5) {
+    size_t row = 0;
+    //  places a link ???
+    for (size_t col = 0; col < 8; col++) {
+        if (col != 3 && col != 4)
+        {
+            cout << col << endl;
             g.getCell(row, col).link = &p1.getPlLink(col);
             p1.getPlLink(col).setCoord(row, col);
         }
     }
-    for (size_t col = 4; col <= 5; col++) {
-        g.getCell(row, col).build->buildServer(p1.getPlayerNum());
+    // builds servers
+    for (size_t col = 3; col <= 4; col++)
+    {
+        g.getCell(row, col).buildServer(p1.getPlayerNum());
     }
 
-    row = 2;
-    for (size_t col = 4; col <= 5; col++) {
+    // 
+    row = 1;
+    for (size_t col = 3; col <= 4; col++) {
         g.getCell(row, col).link = &p1.getPlLink(col);
         p1.getPlLink(col).setCoord(row, col);
     }
 
-    row = 7;
-    for (size_t col = 4; col <= 5; col++) {
+    row = 6;
+    for (size_t col = 3; col <= 4; col++) {
         g.getCell(row, col).link = &p2.getPlLink(col);
         p2.getPlLink(col).setCoord(row, col);
     }
 
-    row = 8;
-    for (size_t col = 1; col <= 8; col++) {
-        if (col != 4 && col != 5) {
+    row = 7;
+    for (size_t col = 0; col < 8; col++) {
+        if (col != 3 && col != 4) {
             g.getCell(row, col).link = &p2.getPlLink(col);
             p2.getPlLink(col).setCoord(row, col);
         }
     }
-    for (size_t col = 4; col <= 5; col++) {
+
+    for (size_t col = 3; col <= 4; col++) {
         g.getCell(row, col).build->buildServer(p2.getPlayerNum());
     }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
+    cout << "RUNNING" << endl;
     unique_ptr<Game> g{new Game()};
+    // (*g).getPlayer(0);
 
     const string DEFAULTAB = "LFDSP";
 
@@ -135,7 +155,9 @@ int main(int argc, char* argv[]) {
             graphics = true;
         }
     }
-    
+
+    cout << "READ ARGS SUCCESS" << endl;
+
     if (!ab1setup) {
         abilitySetup(g, 0, DEFAULTAB);
     }
@@ -143,6 +165,8 @@ int main(int argc, char* argv[]) {
     if (!ab2setup) {
         abilitySetup(g, 1, DEFAULTAB);
     }
+
+    cout << "ABILITY SETUP SUCCESS" << endl;
 
     if (!links1setup) {
         linkSetupRandom(*g, 0);
@@ -152,9 +176,17 @@ int main(int argc, char* argv[]) {
         linkSetupRandom(*g, 1);
     }
 
+    cout << "LINK SETUP SUCCESS" << endl;
+
     gridSetup(*g);
+
+    cout << "GRID SETUP SUCCESS" << endl;
+
     g->attach(new TextDisplay(*g));
+
+    cout << "TEXT ATTACH SUCESS" << endl;
     g->runGame();
+
 
     //delete everything if need be
 

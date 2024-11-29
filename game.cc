@@ -38,9 +38,10 @@ Game::Game() {
         }
     }
 
+    players.emplace_back(unique_ptr<Player> {new Player(0)});
     players.emplace_back(unique_ptr<Player> {new Player(1)});
-    players.emplace_back(unique_ptr<Player> {new Player(2)});
-
+    cout << "MAKING GAME" << endl;
+ 
     gameOver = false;
     playerTurn = 0;
     playerCastedAbility = false;
@@ -51,12 +52,12 @@ Game::~Game() {}
 
 Link& Game::getLink(char l) const {
     if ( l > 'a' && l < 'g') {
-        return getPlayer(1).getPlLink(l -'a');
+        return getPlayer(0).getPlLink(l -'a');
     } 
     else if ( l > 'A' && l < 'G') {
-        return getPlayer(2).getPlLink(l - 'A'); 
+        return getPlayer(1).getPlLink(l - 'A'); 
     }
-    throw invalid_argument("Invalid link character");
+    throw invalid_argument("Invalid link character " +l);
 }  
 
 const Cell& Game::getCell(size_t row, size_t col) const {
@@ -79,7 +80,7 @@ char Game::getState(size_t row, size_t col) const {
     } else if (theBoard[row][col]->server) {
         return 'S';
     } else {
-        return ' ';
+        return '.';
     }
 }
 
@@ -103,11 +104,11 @@ void Game::downloadLink(int playerNum, string type) {
     }
 }
 
-bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
+bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) { 
     int travelDistance = linkRef->getTravelDistance();
     int otherPlayerNum;
-    if (playerTurn == 1) otherPlayerNum = 2;
-    else otherPlayerNum = 1;
+    if (playerTurn == 0) otherPlayerNum = 1;
+    else otherPlayerNum = 0;
 
     switch(direction) {
         case 'u':
@@ -125,7 +126,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                 }
 
                 if(theBoard[y-travelDistance][x]->link == nullptr) {
-                    if (y-travelDistance == 0 && (x == 4 && x == 5) && playerTurn == 2) {
+                    if (y-travelDistance == 0 && (x == 3 && x == 4) && playerTurn == 1) {
                         downloadLink(1, linkRef->getType());
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
@@ -151,8 +152,8 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 }
-            } else if (playerTurn == 2) {
-                downloadLink(2, linkRef->getType());
+            } else if (playerTurn == 1) {
+                downloadLink(1, linkRef->getType());
                 removeLink(*theBoard[y][x]);
                 linkRef->setCoord(100, 100);
                 return true;
@@ -162,7 +163,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
             break;
             
         case 'd':
-            if(y+travelDistance <= 7) {
+            if(y+travelDistance < 8) {
                 if (theBoard[y+travelDistance][x]->firewall == true) {
                     if (theBoard[y+travelDistance][x]->build->getPlayerId() != playerTurn) {
                         theBoard[y+travelDistance][x]->link->reveal();
@@ -176,8 +177,8 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                 }
 
                 if(theBoard[y+travelDistance][x]->link == nullptr) {
-                    if (y+travelDistance == 7 && (x == 4 && x == 5) && playerTurn == 1) {
-                        downloadLink(2, linkRef->getType());
+                    if (y+travelDistance == 7 && (x == 3 && x == 4) && playerTurn == 0) {
+                        downloadLink(1, linkRef->getType());
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         return true;
@@ -202,8 +203,8 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                         return true;
                     }
                 }
-            } else if (playerTurn == 1) {
-                downloadLink(1, linkRef->getType());
+            } else if (playerTurn == 0) {
+                downloadLink(0, linkRef->getType());
                 removeLink(*theBoard[y][x]);
                 linkRef->setCoord(100, 100);
                 return true;
@@ -227,13 +228,13 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                 }
 
                 if(theBoard[y][x-travelDistance]->link == nullptr) {
-                    if (y == 7 && (x-travelDistance == 4 && x-travelDistance == 5) && playerTurn == 1) {
-                        downloadLink(2, linkRef->getType());
+                    if (y == 7 && (x-travelDistance == 3 && x-travelDistance == 4) && playerTurn == 0) {
+                        downloadLink(1, linkRef->getType());
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         return true;
-                    } else if (y == 0 && (x-travelDistance == 4 && x-travelDistance == 5) && playerTurn == 2) {
-                        downloadLink(1, linkRef->getType());
+                    } else if (y == 0 && (x-travelDistance == 3 && x-travelDistance == 4) && playerTurn == 1) {
+                        downloadLink(0, linkRef->getType());
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         return true;
@@ -277,13 +278,13 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
                 }
 
                 if(theBoard[y][x+travelDistance]->link == nullptr) {
-                    if (y == 7 && (x+travelDistance == 4 && x+travelDistance == 5) && playerTurn == 1) {
-                        downloadLink(2, linkRef->getType());
+                    if (y == 7 && (x+travelDistance == 3 && x+travelDistance == 4) && playerTurn == 0) {
+                        downloadLink(1, linkRef->getType());
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         return true;
-                    } else if (y == 0 && (x+travelDistance == 4 && x+travelDistance == 5) && playerTurn == 2) {
-                        downloadLink(1, linkRef->getType());
+                    } else if (y == 0 && (x+travelDistance == 3 && x+travelDistance == 4) && playerTurn == 1) {
+                        downloadLink(0, linkRef->getType());
                         removeLink(*theBoard[y][x]);
                         linkRef->setCoord(100, 100);
                         return true;
@@ -406,8 +407,8 @@ void Game::runCommand(string command) {
 
 void Game::checkWin() {
     int otherPlayerNum;
-    if (playerTurn == 1) otherPlayerNum = 2;
-    else otherPlayerNum = 1;
+    if (playerTurn == 0) otherPlayerNum = 1;
+    else otherPlayerNum = 0;
 
     if (getPlayer(playerTurn).getNumOfDataDld() == 4 ||
             getPlayer(otherPlayerNum).getNumOfVirusDld() == 4) {
@@ -449,12 +450,13 @@ void Game::runGame() {
         }
 
         playerMovedLink = false;
-        if (playerTurn == 1) playerTurn = 2;
-        else if (playerTurn == 2) playerTurn = 1;
+        if (playerTurn == 0) playerTurn = 1;
+        else if (playerTurn == 1) playerTurn = 0;
     }
 
 }
 
-Player& Game::getPlayer(int playerNum) const {
-    return *players[playerNum-1];
+Player &Game::getPlayer(int playerNum) const {
+    // cout << "Getting Player Number: " << playerNum << endl;
+    return *players[playerNum];
 }
