@@ -44,7 +44,7 @@ public:
 
 private:
     vector<unique_ptr<Player>> players;
-    void downloadLink(int playerNum, string type);
+    void downloadLink(int playerNum, Link& link);
     vector<vector<unique_ptr<Cell>>> theBoard;
     int playerTurn;
     bool playerCastedAbility;

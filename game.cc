@@ -51,10 +51,10 @@ Game::Game() {
 Game::~Game() {}
 
 Link& Game::getLink(char l) const {
-    if ( l >= 'a' && l <= 'g') {
+    if ( l >= 'a' && l <= 'h') {
         return getPlayer(0).getPlLink(l -'a');
     } 
-    else if ( l >= 'A' && l <= 'G') {
+    else if ( l >= 'A' && l <= 'H') {
         return getPlayer(1).getPlLink(l - 'A'); 
     }
     throw invalid_argument("Invalid link character " +l);
@@ -97,14 +97,15 @@ bool Game::castAbility(int index, Cell& target) {
     return false;
 }
 
-void Game::downloadLink(int playerNum, string type) {
-    if (type == "data") {
+
+void Game::downloadLink(int playerNum, Link& link) {
+    if (link.getType() == "data") {
         getPlayer(playerNum).download(true);
     } else {
         getPlayer(playerNum).download(false);
     }
+    link.deactivate();
 }
-
 
 //helper function for moveLink
 //handles everything, requires a direction
@@ -115,7 +116,7 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
     int OpponentBoundary = playerTurn == 0 ? 7 : 0;
     bool offOpponentLedge = playerTurn == 0 ? targetY > OpponentBoundary : targetY < OpponentBoundary;
     if (offOpponentLedge) {
-        downloadLink(playerTurn, linkRef->getType());
+        downloadLink(playerTurn, *linkRef);
         removeLink(currentCell);
         linkRef->setCoord(100, 100);
         return true;
@@ -158,7 +159,7 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
         if (targetCell.server && targetCell.build->getPlayerId() != playerTurn) {
             int OpponentServerId = targetCell.build->getPlayerId();
             //make opponent download the link
-            downloadLink(OpponentServerId, linkRef->getType());
+            downloadLink(OpponentServerId, *linkRef);
             //remove the link
             removeLink(currentCell);
             //set the link's coordinates to 100, 100
@@ -179,20 +180,22 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
     else if (targetCell.link != nullptr && targetCell.link->getOwnerId() != playerTurn) {
         Link* targetLink = targetCell.link;
         if (linkRef->fightWon(*targetLink)) {
+            //target link loses, current player downloads target link
             cout << "FIGHT WON" << endl;
             cout << "targetLink: " << targetLink->getType() << endl;
             removeLink(currentCell);
             targetLink->setCoord(100, 100);
-            targetLink->deactivate();
             targetCell.link = linkRef;
             linkRef->setCoord(targetY, targetX);
-            downloadLink(playerTurn, linkRef->getType());
+            downloadLink(playerTurn, *targetLink);
             return true;
         } else {
+            //linkRef loses, other player downloads linkRef
+            cout << "FIGHT LOST" << endl;
+            cout << "linkRef: " << linkRef->getType() << endl;
             removeLink(currentCell);
             linkRef->setCoord(100, 100);
-            linkRef->deactivate();
-            downloadLink(targetLink->getOwnerId(), targetLink->getType());
+            downloadLink(targetLink->getOwnerId(), *linkRef);
             return true;
         }
     }
@@ -201,8 +204,14 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
 
 bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) { 
     int travelDistance = linkRef->getTravelDistance();
-    
-    // Check if link is still active
+    int otherPlayerNum = (playerTurn == 0) ? 1 : 0;
+
+    // Check link is owned by 
+    if(linkRef->getOwnerId() != playerTurn) {
+        cout << "LINK IS NOT OWNED BY CURRENT PLAYER" << endl;
+        return false;
+    }
+    //check if the link is active
     if (!linkRef->getActive()) {
         cout << "LINK IS OFF THE BOARD" << endl;
         return false;
@@ -257,7 +266,8 @@ void Game::endTurn() {
     playerTurn++;
     playerTurn %= players.size();
     playerCastedAbility = false;
-    playerMovedLink = true;
+    playerMovedLink = false;
+    // cout << "ENDING TURN" << endl;
 }
 
 void Game::win(int playerNum) {
@@ -303,7 +313,6 @@ void Game::runCommand(string command) {
         int y = linkRef.getY();
         char direction;
         ss >> direction;
-        cout << "run command" << endl;
         if (moveLink(x, y, &linkRef, direction)) {
             Game::endTurn();
         }
@@ -361,6 +370,7 @@ void Game::checkWin() {
 
 void Game::runGame() {
     while (!gameOver) {
+        cout << "Player " << playerTurn+1 << " turn: ";
         string command;
         ifstream input;
         if (useSequenceFirst) {
@@ -376,15 +386,13 @@ void Game::runGame() {
                 useSequence = false;
             }
         }
-        while(!playerMovedLink) {
-            if (!useSequence) {
-                getline(cin, command);
-                runCommand(command);
-                checkWin();
-            } else {
-                runCommand(command);
-                checkWin();
-            }
+        if (!useSequence) {
+            getline(cin, command);
+            runCommand(command);
+            checkWin();
+        } else {
+            runCommand(command);
+            checkWin();
         }
 
         playerMovedLink = false;
