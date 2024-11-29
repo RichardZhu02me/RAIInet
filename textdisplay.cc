@@ -31,7 +31,7 @@ void TextDisplay::notify() {
             int currBase = base + i;
             char currChar = static_cast<char>(currBase);
             char charType = g.getPlayer(0).getPlLink(i).getType() == "data" ? 'D' : 'V';
-            cout << currChar << ": " << charType << g.getPlayer(1).getPlLink(i).getStrength() << " ";
+            cout << currChar << ": " << charType << g.getPlayer(0).getPlLink(i).getStrength() << " ";
         }
         if (i == 3 || i == 7)
             cout << endl;
