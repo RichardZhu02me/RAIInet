@@ -13,7 +13,7 @@ bool Download::Effect(Cell& target, bool debug) {
         if (debug) cout << "TARGET HAS NO LINK!" << endl;
         return false;
     }
-    getCaster().download(target.link);
+    getCaster().download((target.link->getType() == "data"));
     target.link->deactivate();
     target.link = nullptr;
     if (debug) cout << "DOWNLOAD SUCCESSFUL" << endl;

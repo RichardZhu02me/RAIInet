@@ -1,11 +1,10 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 #include <vector>
-
-class Observer;
-
+#include "observer.h"
+#include <memory>
 class Subject {
-  std::vector<Observer*> observers;
+  std::vector<std::unique_ptr<Observer>> observers;
  public:
   void attach( Observer* o );
   void detach( Observer* o );

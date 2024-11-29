@@ -7,7 +7,7 @@
 #include "game.h"
 #include "player.h"
 #include "textdisplay.h"
-#include "graphicsdisplay.h"
+// #include "graphicsdisplay.h"
 
 using namespace std;
 
@@ -166,9 +166,9 @@ int main(int argc, char* argv[])
     gridSetup(*g);
 
     g->attach(new TextDisplay(*g));
-    if (graphics) {
-        g->attach(new GraphicsDisplay(*g));
-    }
+    // if (graphics) {
+    //     g->attach(new GraphicsDisplay(*g));
+    // }
 
     g->runGame();
 

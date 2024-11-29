@@ -21,7 +21,7 @@ bool Link::isRevealed() const {
 }
 
 void Link::reveal() {
-    revealed = true;
+    revealed = true;    
 }
 
 const std::string& Link::getType() const {

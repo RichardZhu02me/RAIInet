@@ -11,7 +11,8 @@ CXX = g++-11					# compiler
 CXXFLAGS = -std=c++20 -g -Wall -Werror=vla -MMD			# compiler flags
 MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-SOURCES = $(wildcard *.cc) $(wildcard abilities/*.cc)		# source files (*.cc)
+SOURCES = $(wildcard *.cc abilities/*.cc)
+SOURCES := $(filter-out graphicsdisplay.cc window.cc, $(SOURCES))
 OBJECTS = ${SOURCES:.cc=.o}			# object files forming executable
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
 EXEC = RAIInet					# executable name
@@ -21,7 +22,7 @@ EXEC = RAIInet					# executable name
 .PHONY : clean					# not file names
 
 ${EXEC} : ${OBJECTS}				# link step
-	${CXX} ${CXXFLAGS} $^ -o $@	-lX11	# additional object files before $^
+	${CXX} ${CXXFLAGS} $^ -o $@ #-lX11	# additional object files before $^
 
 ${OBJECTS} : ${MAKEFILE_NAME}			# OPTIONAL : changes to this file => recompile
 

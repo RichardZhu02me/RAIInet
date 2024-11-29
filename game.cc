@@ -129,13 +129,14 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
         //check if the firewall is owned by the other player
         if (targetCell.build->getPlayerId() != playerTurn) {
             //reveal the link if the firewall is owned by the other player
-            targetCell.link->reveal();
+            linkRef->reveal();
+            cout << "LINK REVEALED" << endl;
             //check if the link is a virus
-            if (targetCell.link->getType() == "virus") {
+            if (linkRef->getType() == "virus") {
                 //download the virus
-                getPlayer(playerTurn).download(false);
+                downloadLink(playerTurn, *linkRef);
                 //remove the link
-                removeLink(targetCell);
+                removeLink(currentCell);
                 //set the link's coordinates to 100, 100
                 linkRef->setCoord(100, 100);
                 //return true
@@ -345,6 +346,8 @@ void Game::runCommand(string command) {
         } else if (abilityName == "Firewall") {
             ss >> x >> y;
             cout << "CASTING ABILITY " << abilityName << " ON CELL " << x << " " << y << endl;
+            x--;
+            y--;
         }
         else {
             cout << "INVALID ABILITY!" << endl;

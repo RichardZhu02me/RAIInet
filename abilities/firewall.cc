@@ -22,7 +22,6 @@ bool Firewall::Effect(Cell& target, bool debug) {
     //set the build on the cell
     target.build = Build::buildFirewall(getCaster().getPlayerNum());
     target.firewall = true;
-    cout << "FIREWALL BUILT!" << endl;
     return true;
 }
 
