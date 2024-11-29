@@ -97,14 +97,15 @@ bool Game::castAbility(int index, Cell& target) {
     return false;
 }
 
-void Game::downloadLink(int playerNum, string type) {
-    if (type == "data") {
+
+void Game::downloadLink(int playerNum, Link& link) {
+    if (link.getType() == "data") {
         getPlayer(playerNum).download(true);
     } else {
         getPlayer(playerNum).download(false);
     }
+    link.deactivate();
 }
-
 
 //helper function for moveLink
 //handles everything, requires a direction
@@ -115,7 +116,7 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
     int OpponentBoundary = playerTurn == 0 ? 7 : 0;
     bool offOpponentLedge = playerTurn == 0 ? targetY > OpponentBoundary : targetY < OpponentBoundary;
     if (offOpponentLedge) {
-        downloadLink(playerTurn, linkRef->getType());
+        downloadLink(playerTurn, *linkRef);
         removeLink(currentCell);
         linkRef->setCoord(100, 100);
         return true;
@@ -158,7 +159,7 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
         if (targetCell.server && targetCell.build->getPlayerId() != playerTurn) {
             int OpponentServerId = targetCell.build->getPlayerId();
             //make opponent download the link
-            downloadLink(OpponentServerId, linkRef->getType());
+            downloadLink(OpponentServerId, *linkRef);
             //remove the link
             removeLink(currentCell);
             //set the link's coordinates to 100, 100
@@ -179,20 +180,22 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
     else if (targetCell.link != nullptr && targetCell.link->getOwnerId() != playerTurn) {
         Link* targetLink = targetCell.link;
         if (linkRef->fightWon(*targetLink)) {
+            //target link loses, current player downloads target link
             cout << "FIGHT WON" << endl;
             cout << "targetLink: " << targetLink->getType() << endl;
             removeLink(currentCell);
             targetLink->setCoord(100, 100);
-            targetLink->deactivate();
             targetCell.link = linkRef;
             linkRef->setCoord(targetY, targetX);
-            downloadLink(playerTurn, linkRef->getType());
+            downloadLink(playerTurn, *targetLink);
             return true;
         } else {
+            //linkRef loses, other player downloads linkRef
+            cout << "FIGHT LOST" << endl;
+            cout << "linkRef: " << linkRef->getType() << endl;
             removeLink(currentCell);
             linkRef->setCoord(100, 100);
-            linkRef->deactivate();
-            downloadLink(targetLink->getOwnerId(), targetLink->getType());
+            downloadLink(targetLink->getOwnerId(), *linkRef);
             return true;
         }
     }
@@ -301,7 +304,6 @@ void Game::runCommand(string command) {
         int y = linkRef.getY();
         char direction;
         ss >> direction;
-        cout << "run command" << endl;
         if (moveLink(x, y, &linkRef, direction)) {
             Game::endTurn();
         }
