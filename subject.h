@@ -1,13 +1,15 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 #include <vector>
+#include <memory>
+#include "observer.h"
 
-class Observer;
+using namespace std;
 
 class Subject {
-  std::vector<Observer*> observers;
+  vector<unique_ptr<Observer>> observers;
  public:
-  void attach( Observer* o );
+  void attach( unique_ptr<Observer> o );
   void detach( Observer* o );
   void notifyObservers();
   virtual char getState( size_t row, size_t col ) const = 0;
