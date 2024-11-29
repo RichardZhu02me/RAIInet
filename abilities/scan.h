@@ -8,7 +8,7 @@
 using namespace std;
 
 class Scan: public Ability {
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Scan(Player& caster);
 };

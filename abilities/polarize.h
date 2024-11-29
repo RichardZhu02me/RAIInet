@@ -7,7 +7,7 @@
 using namespace std;
 
 class Polarize: public Ability {
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Polarize(Player& caster);   
 };

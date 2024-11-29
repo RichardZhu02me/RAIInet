@@ -6,7 +6,7 @@
 using namespace std;
 
 class Stun: public Ability {
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Stun(Player& caster);
 };

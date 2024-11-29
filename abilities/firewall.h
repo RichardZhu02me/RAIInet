@@ -7,7 +7,7 @@ using namespace std;
 
 
 class Firewall: public Ability {
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Firewall(Player& caster);
 };

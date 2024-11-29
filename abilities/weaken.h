@@ -7,7 +7,7 @@ using namespace std;
 
 
 class Weaken: public Ability {
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Weaken(Player& caster);
 };

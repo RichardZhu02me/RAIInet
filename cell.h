@@ -41,8 +41,8 @@ struct Cell {
         return *this;
     }
 
-    void buildServer(int PlayerId) {
-        build = Build::buildServer(PlayerId);
+    void buildServer(int playerId) {
+        build = Build::buildServer(playerId);
         server = true;
     }
 };

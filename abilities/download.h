@@ -7,7 +7,7 @@ using namespace std;
 
 
 class Download: public Ability {
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Download(Player& caster);
 };

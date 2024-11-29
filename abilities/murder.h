@@ -9,7 +9,7 @@ using namespace std;
 
 class Murder: public Ability {
     //kill the target in the cell if there is a player's link nearby
-    virtual bool Effect(Cell& target) override;
+    bool Effect(Cell& target) override;
 public:
     Murder(Player& caster);
 };

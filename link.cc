@@ -6,8 +6,9 @@ Link::Link(const std::string& type, int strength, char symbol, int ownerId) :
 
 Link::~Link(){}
 
-bool Link::fightWon(Link& opponent) const {
+bool Link::fightWon(Link& opponent) {
     opponent.reveal();
+    this->reveal();
     return (strength > opponent.strength) || (strength == opponent.strength && type == "data");
 }
 
