@@ -374,9 +374,6 @@ void Game::runCommand(string command) {
         int y = linkRef.getY();
         char direction;
         ss >> direction;
-        Link& linkRef = getLink(l);
-        int x = linkRef.getX();
-        int y = linkRef.getY();
         cout << "good here";
         if (moveLink(x, y, &linkRef, direction)) {
             Game::endTurn();
