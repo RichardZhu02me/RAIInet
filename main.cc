@@ -28,7 +28,7 @@ void linkSetup(unique_ptr<Game>& g, size_t playerNum, string linkFile)
     ifstream input(linkFile);
     string word;
     char base;
-    if (playerNum == 1) base = 'a';
+    if (playerNum == 0) base = 'a';
     else base = 'A';
 
     for (int id = 0; id < 8; id++) {
@@ -49,9 +49,8 @@ void linkSetupRandom(Game& g, size_t playerNum) {
     random_device rd;
     mt19937 gen(rd());
     char base;
-    if (playerNum == 1) base = 'a';
-    else
-        base = 'A';
+    if (playerNum == 0) base = 'a';
+    else base = 'A';
 
     shuffle(linkVals.begin(), linkVals.end(), gen);
 
