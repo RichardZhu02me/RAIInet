@@ -4,7 +4,7 @@ using namespace std;
 
 Download::Download(Player& caster) 
     : Ability(caster) {
-    name = "download";
+    name = "Download";
 }
 
 bool Download::Effect(Cell& target) {

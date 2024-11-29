@@ -51,10 +51,10 @@ Game::Game() {
 Game::~Game() {}
 
 Link& Game::getLink(char l) const {
-    if ( l >= 'a' && l <= 'g') {
+    if ( l >= 'a' && l <= 'h') {
         return getPlayer(0).getPlLink(l -'a');
     } 
-    else if ( l >= 'A' && l <= 'G') {
+    else if ( l >= 'A' && l <= 'H') {
         return getPlayer(1).getPlLink(l - 'A'); 
     }
     throw invalid_argument("Invalid link character " +l);
@@ -204,6 +204,11 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
     int otherPlayerNum;
     if (playerTurn == 0) otherPlayerNum = 1;
     else otherPlayerNum = 0;
+    if(linkRef->getOwnerId() != playerTurn) {
+        cout << "LINK IS NOT OWNED BY CURRENT PLAYER" << endl;
+        return false;
+    }
+    //check if the link is active
     if (!linkRef->getActive()) {
         cout << "LINK IS OFF THE BOARD" << endl;
         return false;
@@ -249,7 +254,8 @@ void Game::endTurn() {
     playerTurn++;
     playerTurn %= players.size();
     playerCastedAbility = false;
-    playerMovedLink = true;
+    playerMovedLink = false;
+    // cout << "ENDING TURN" << endl;
 }
 
 void Game::win(int playerNum) {
@@ -336,9 +342,7 @@ void Game::runCommand(string command) {
 }
 
 void Game::checkWin() {
-    int otherPlayerNum;
-    if (playerTurn == 0) otherPlayerNum = 1;
-    else otherPlayerNum = 0;
+    int otherPlayerNum = playerTurn == 0 ? 1 : 0;
 
     if (getPlayer(playerTurn).getNumOfDataDld() == 4 ||
             getPlayer(otherPlayerNum).getNumOfVirusDld() == 4) {
@@ -353,6 +357,7 @@ void Game::checkWin() {
 
 void Game::runGame() {
     while (!gameOver) {
+        cout << "Player " << playerTurn+1 << " turn: ";
         string command;
         ifstream input;
         if (useSequenceFirst) {
@@ -368,20 +373,14 @@ void Game::runGame() {
                 useSequence = false;
             }
         }
-        while(!playerMovedLink) {
-            if (!useSequence) {
-                getline(cin, command);
-                runCommand(command);
-                checkWin();
-            } else {
-                runCommand(command);
-                checkWin();
-            }
+        if (!useSequence) {
+            getline(cin, command);
+            runCommand(command);
+            checkWin();
+        } else {
+            runCommand(command);
+            checkWin();
         }
-
-        playerMovedLink = false;
-        if (playerTurn == 0) playerTurn = 1;
-        else if (playerTurn == 1) playerTurn = 0;
     }
 
 }
