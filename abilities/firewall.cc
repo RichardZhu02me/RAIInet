@@ -24,4 +24,3 @@ bool Firewall::Effect(Cell& target, bool debug) {
     target.firewall = true;
     return true;
 }
-

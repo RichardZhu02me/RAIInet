@@ -15,4 +15,3 @@ bool Polarize::Effect(Cell& target, bool debug) {
     target.link->changeType();
     return true;
 }
-

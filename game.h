@@ -26,7 +26,9 @@ public:
 
     char getState(size_t row, size_t col) const override;
 
+    //runs the given command
     void runCommand(string command);
+    //runs the game
     void runGame();
     bool castAbility(int index, Cell& target);
     //move the link to the target cell
@@ -35,13 +37,20 @@ public:
     bool moveLinkHelper(int y, int x, Link* linkRef);
     void removeLink(Cell& target);
 
+    //ends the turn and gives control to the next player
     void endTurn();
+    //get the player at the given player number
     Player& getPlayer(int playerNum) const;
+    //declare the player at the given player number as the winner
     void win(int playerNum);
+    //declare the player at the given player number as the loser
     void loss(int playerNum);
+    //displays the abilities of the player at the given player number
     void displayAbilities(int playerNum);
+    //checks if the game is over
     void checkWin();
 
+    //get the player whose turn it is
     int getPlayerTurn();
 
 private:
