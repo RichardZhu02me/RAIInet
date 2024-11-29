@@ -58,9 +58,7 @@ void linkSetupRandom(Game& g, size_t playerNum) {
     {
         char type = linkVals[id][0];
         int strength = linkVals[id][1] - '0';
-        // cout << "Values " << type <<" "<< strength<< " "<<(base + id) << "Player Num"<< pl.getPlayerNum() << endl;
         pl.setLink(type, strength, (base + id));
-        // cout << playerNum << endl;
     }
 }
 
@@ -112,9 +110,7 @@ void gridSetup(Game& g) {
 
 int main(int argc, char* argv[])
 {
-    // cout << "RUNNING" << endl;
     unique_ptr<Game> g{new Game()};
-    // (*g).getPlayer(0);
 
     const string DEFAULTAB = "LFDSP";
 
@@ -158,7 +154,7 @@ int main(int argc, char* argv[])
     if (!ab2setup) {
         abilitySetup(g, 1, DEFAULTAB);
     }
-    //cout << "past ability setup " << endl;
+
     if (!links1setup) {
         linkSetupRandom(*g, 0);
     }
@@ -166,18 +162,15 @@ int main(int argc, char* argv[])
     if (!links2setup) {
         linkSetupRandom(*g, 1);
     }
-    //cout << "past link setup " << endl;
+
     gridSetup(*g);
-    //cout << "past grid setup " << endl;
+
     g->attach(new TextDisplay(*g));
     if (graphics) {
         g->attach(new GraphicsDisplay(*g));
     }
-    //cout << "past text display " << endl;
+
     g->runGame();
-
-
-    //delete everything if need be
 
     return 0;
 }
