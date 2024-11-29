@@ -1,13 +1,6 @@
 {
     "files.associations": {
         "random": "cpp",
-        "memory": "cpp",
-        "xstring": "cpp",
-        "iostream": "cpp",
-        "new": "cpp",
-        "typeindex": "cpp",
-        "typeinfo": "cpp",
-        "map": "cpp",
-        "stdexcept": "cpp"
+        "memory": "cpp"
     }
 }

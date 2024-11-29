@@ -154,9 +154,7 @@ int main(int argc, char* argv[])
             graphics = true;
         }
     }
-
-    cout << "READ ARGS SUCCESS" << endl;
-
+    cout << "past arguments " << endl;
     if (!ab1setup) {
         abilitySetup(g, 0, DEFAULTAB);
     }
@@ -164,9 +162,7 @@ int main(int argc, char* argv[])
     if (!ab2setup) {
         abilitySetup(g, 1, DEFAULTAB);
     }
-
-    cout << "ABILITY SETUP SUCCESS" << endl;
-
+    cout << "past ability setup " << endl;
     if (!links1setup) {
         linkSetupRandom(*g, 0);
     }
@@ -174,16 +170,11 @@ int main(int argc, char* argv[])
     if (!links2setup) {
         linkSetupRandom(*g, 1);
     }
-
-    cout << "LINK SETUP SUCCESS" << endl;
-
+    cout << "past link setup " << endl;
     gridSetup(*g);
-
-    cout << "GRID SETUP SUCCESS" << endl;
-
+    cout << "past grid setup " << endl;
     g->attach(new TextDisplay(*g));
-
-    cout << "TEXT ATTACH SUCESS" << endl;
+    cout << "past text display " << endl;
     g->runGame();
 
 
