@@ -11,7 +11,7 @@ class Player;
 
 class Ability {
 protected:
-    int id;
+    string name;
     Player& getCaster() const;
 private:
     virtual bool Effect(Cell& target)=0;
@@ -20,11 +20,11 @@ private:
 public:
     Ability(Player& caster);
     virtual bool cast(Cell& target);
-    const static map<int, string> abilityLibrary;
+    static const map<char, string> abilityLibrary;
 
     bool getAvailable() const;
     void setUnavailable();
-    int getId() const;
+    string getName() const;
 };
 
 #endif

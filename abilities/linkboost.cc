@@ -4,7 +4,7 @@ using namespace std;
 
 LinkBoost::LinkBoost(Player& caster) 
     : Ability(caster) {
-    id = 1;
+    name = "Link Boost";
 }   
 
 bool LinkBoost::Effect(Cell& target) {

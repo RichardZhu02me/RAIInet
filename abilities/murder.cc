@@ -4,7 +4,7 @@ using namespace std;
 
 Murder::Murder(Player& caster) 
     : Ability(caster) {
-    id = 9;  // Use appropriate ID for Murder ability
+    name = "Murder";  // Use appropriate ID for Murder ability
 }
 
 bool Murder::Effect(Cell& target) {

@@ -84,12 +84,13 @@ char Game::getState(size_t row, size_t col) const {
     }
 }
 
-bool Game::castAbility(string ability, Cell& target) {
+//casts the Ability at index 1
+//takes a 
+bool Game::castAbility(int index, Cell& target) {
     //check if current player has the ability
-    Ability& a = getPlayer(playerTurn).getAbility(Game::ABILITIES.at(ability));
+    Ability& a = getPlayer(playerTurn).getAbility(index);
     if(a.getAvailable()) {
         if (a.cast(target)) {
-            getPlayer(playerTurn).removeAbility(Game::ABILITIES.at(ability));
             return true;
         }
     }
@@ -340,12 +341,17 @@ void Game::loss(int playerNum) { //don't need this
     gameOver = true;
 }
 
+// displays abilities in the following manner:
+// id: AbilityName Availability
+// e.g.
+// 1: Link Boost AVAILABLE
+// 2: Download UNAVAIABLE
+// NEEDS TO CHANGE
 void Game::displayAbilities(int playerNum) {
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 5; i++) {
         Ability& a = getPlayer(playerNum).getAbility(i);
-        cout << a.getId() << ": "
-            << Ability::abilityLibrary.at(a.getId()) << "  ";
-
+        cout << i+1 << ": "
+            << a.getName() << "  ";
         if (a.getAvailable()) {
             cout << "AVAILABLE!";
         } else {
@@ -368,13 +374,16 @@ void Game::runCommand(string command) {
         Link& linkRef = getLink(l);
         int x = linkRef.getX();
         int y = linkRef.getY();
+        cout << "good here";
         if (moveLink(x, y, &linkRef, direction)) {
             Game::endTurn();
         }
-    } else if(action == "ability" && !playerCastedAbility) {
+    } 
+    else if(action == "ability" && !playerCastedAbility) {
         int abilityNum;
         ss >> abilityNum;
-        string abilityName = Ability::abilityLibrary.at(abilityNum);
+        Ability &a = getPlayer(playerTurn).getAbility(abilityNum);
+        string abilityName = a.getName();
         size_t x, y;
         if (abilityName == "linkboost" || abilityName == "download" ||
                 abilityName == "polarize" || abilityName == "scan") {
@@ -388,7 +397,7 @@ void Game::runCommand(string command) {
         } else if (abilityName == "firewall") {
             ss >> x >> y;
         }
-        if (castAbility(abilityName, getCell(x, y))) {
+        if (castAbility(abilityNum,getCell(x, y))) {
             playerCastedAbility = true;
         }
     } else if(action == "abilities") {

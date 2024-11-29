@@ -3,13 +3,17 @@
 #include "player.h"
 using namespace std;
 
-Ability::Ability(Player& caster): id(0), available(true), caster(&caster) {}
+Ability::Ability(Player& caster): available(true), caster(&caster) {}
 
 //cast the ability on the target cell
-//return true if the ability was cast successfully
+//return true if the ability was cast successfully and makes the ability unavailable to cast
 //return false otherwise
 bool Ability::cast(Cell& target) {
-    if(Effect(target)) return true;
+    if (!getAvailable()) return false;
+    if(Effect(target)) {
+        setUnavailable();
+        return true;
+    } 
     return false;
 }
 
@@ -25,17 +29,18 @@ Player& Ability::getCaster() const {
     return *caster;
 }
 
-const map<int, string> Ability::abilityLibrary = {
-    {1, "Link Boost"},
-    {2, "Scan"},
-    {3, "Download"},
-    {4, "Firewall"},
-    {5, "Polarity"},
-    {6, "Steal"}, // steal is not implemented, will steal an opponent's link
-    {7, "Stun"}, // stun is not implemented, will stop an opponent from moving the unit for two turns
-    {8, "Weaken"}, 
+static const map<char, string> abilityLibrary = {
+        {'L', "Link Boost"},
+        {'S', "Scan"},
+        {'D', "Download"},
+        {'F', "Firewall"},
+        {'P', "Polarity"},
+        {'X', "Steal"}, // steal is not implemented, will steal an opponent's link
+        {'C', "Stun"}, // stun is not implemented, will stop an opponent from moving the unit for two turns
+        {'W', "Weaken"}, 
 };
 
-int Ability::getId() const {
-    return id;
+
+string Ability::getName() const {
+    return name;
 }

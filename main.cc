@@ -110,7 +110,7 @@ void gridSetup(Game& g) {
     }
 
     for (size_t col = 3; col <= 4; col++) {
-        g.getCell(row, col).build->buildServer(p2.getPlayerNum());
+        g.getCell(row, col).buildServer(p2.getPlayerNum());
     }
 }
 

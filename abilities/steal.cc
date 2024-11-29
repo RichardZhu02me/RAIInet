@@ -7,7 +7,7 @@ using namespace std;
 
 Steal::Steal(Player& caster) 
     : Ability(caster) {
-    id = 6;
+    name = "Steal";
 }
 
 bool Steal::Effect(Cell& target) {

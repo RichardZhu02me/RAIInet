@@ -72,47 +72,46 @@ Link& Player::getPlLink(size_t id) {
 }
 
 
-Ability& Player::getAbility(size_t id) {
-    
+Ability& Player::getAbility(size_t id) { 
     return *abilities[id];
 }
 
-bool Player::addAbility(int id) {
+bool Player::addAbility(char c) {
     // cout << "BRUH" << endl;
     // cout << downloadedViruses<< endl;
     unique_ptr<Ability> newAbility;
-    switch (id) {
-        case 1:
+    switch (c) {
+        case 'L':
             newAbility = unique_ptr<Ability>(new LinkBoost(*this));
             abilities.push_back(std::move(newAbility));
             break;
-        case 2:
+        case 'S':
             newAbility = unique_ptr<Ability>(new Scan(*this));
             abilities.push_back(std::move(newAbility));
             break;
-        case 3:
+        case 'D':
             newAbility = unique_ptr<Ability>(new Download(*this));
             abilities.push_back(std::move(newAbility));
             break;  
-        case 4:
+        case 'F':
             newAbility = unique_ptr<Ability>(new Firewall(*this));
             abilities.push_back(std::move(newAbility));
             break;
-        case 5:
+        case 'P':
             newAbility = unique_ptr<Ability>(new Polarize(*this));
             abilities.push_back(std::move(newAbility));
             break;
-        case 6: // Steal not implemented
+        case 'X': // Steal not implemented
             return false;
             newAbility = unique_ptr<Ability>(new Steal(*this));
             abilities.push_back(std::move(newAbility));
             break;
-        case 7: // Stun not implemented
+        case 'C': // Stun not implemented
             return false;
             newAbility = unique_ptr<Ability>(new Stun(*this));
             abilities.push_back(std::move(newAbility));
             break;
-        case 8: 
+        case 'W': 
             newAbility = unique_ptr<Ability>(new Weaken(*this));
             abilities.push_back(std::move(newAbility));
             break;
@@ -122,9 +121,3 @@ bool Player::addAbility(int id) {
     return true;
 }
 
-void Player::removeAbility(size_t abId) {
-    abilities.erase(
-        std::remove(abilities.begin(), abilities.end(), abilities[abId]),
-        abilities.end()
-    );
-}

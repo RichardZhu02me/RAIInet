@@ -17,9 +17,10 @@ void TextDisplay::notify() {
 
     char base = 'a';
     for (int i = 0; i < 8; i++) {
-        char currBase = base;
+        char currBase = base + i;
+        char currChar = static_cast<char>(currBase);
         char charType = g.getPlayer(0).getPlLink(i).getType() == "data" ? 'D' : 'V';
-        cout << currBase << ": " << charType << g.getPlayer(0).getPlLink(i).getStrength() << " ";
+        cout << currChar << ": " << charType << g.getPlayer(0).getPlLink(i).getStrength() << " ";
         if (i == 3 || i == 7) cout << endl;
     }
 
@@ -44,11 +45,14 @@ void TextDisplay::notify() {
     base = 'A';
     for (int i = 0; i < 8; i++) {
         if (!(g.getPlayer(1).getPlLink(i).isRevealed())) {
-            cout << (base + i) << ": ?  ";
+            int currBase = base + i;
+            char currChar = static_cast<char>(currBase);
+            cout << currChar << ": ?  ";
         } else {
-            char currBase = base;
+            int currBase = base + i;
+            char currChar = static_cast<char>(currBase);
             char charType = g.getPlayer(1).getPlLink(i).getType() == "data" ? 'D' : 'V';
-            cout << currBase << ": " << charType << g.getPlayer(1).getPlLink(i).getStrength() << " ";
+            cout << currChar << ": " << charType << g.getPlayer(1).getPlLink(i).getStrength() << " ";
         }
         if (i == 3 || i == 7) cout << endl;
     }

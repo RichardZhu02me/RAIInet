@@ -4,7 +4,7 @@ using namespace std;
 
 Stun::Stun(Player& caster) 
     : Ability(caster) {
-    id = 7;
+    name = "Stun";
 }
 
 bool Stun::Effect(Cell& target) {

@@ -4,7 +4,7 @@
 
 Weaken::Weaken(Player& caster) 
     : Ability(caster) {
-    id = 8;
+    name = "Weaken";
 }
 
 bool Weaken::Effect(Cell& target) {

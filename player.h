@@ -36,7 +36,7 @@ public:
     Link& getPlLink(size_t id);
     Ability& getAbility(size_t abId);    
     void removeAbility(size_t abId);
-    bool addAbility(int id);
+    bool addAbility(char c);
     void setLink(char type, int strength, char symbol);
     // void setOpponent(Player& opp);
 };

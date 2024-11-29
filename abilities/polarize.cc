@@ -4,7 +4,7 @@ using namespace std;
 
 Polarize::Polarize(Player& caster) 
     : Ability(caster) {
-    id = 5;
+    name = "Polarize";
 }
 
 bool Polarize::Effect(Cell& target) {

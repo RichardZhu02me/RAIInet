@@ -5,7 +5,7 @@ using namespace std;
 
 Firewall::Firewall(Player& caster) 
     : Ability(caster) {
-    id = 3;
+    name = "Firewall";
 }   
 
 bool Firewall::Effect(Cell& target) {

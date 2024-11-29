@@ -28,7 +28,7 @@ public:
 
     void runCommand(string command);
     void runGame();
-    bool castAbility(string ability, Cell& target);
+    bool castAbility(int index, Cell& target);
     bool moveLink(size_t x, size_t y, Link* linkRef, char direction);
     void removeLink(Cell& target);
 

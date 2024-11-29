@@ -4,7 +4,7 @@ using namespace std;
 
 Scan::Scan(Player& caster) 
     : Ability(caster) {
-    id = 2;
+    name = "Scan";
 }
 
 bool Scan::Effect(Cell& target) {
