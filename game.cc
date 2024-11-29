@@ -201,16 +201,21 @@ bool Game::moveLinkHelper(int targetY, int targetX, Link* linkRef) {
 
 bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) { 
     int travelDistance = linkRef->getTravelDistance();
-    int otherPlayerNum;
-    if (playerTurn == 0) otherPlayerNum = 1;
-    else otherPlayerNum = 0;
+    
+    // Check if link is still active
     if (!linkRef->getActive()) {
         cout << "LINK IS OFF THE BOARD" << endl;
         return false;
     }
 
-    Cell& currentCell = getCell(y, x);
+    // Check if allowed to move link
+    if (linkRef->getOwnerId() != playerTurn)
+    {
+        cout << "INVALID LINK!" << endl;
+        return false;
+    }
 
+    // Check which direction to move in
     switch(direction) {
         case 'u':
             //check if the cell is out of bounds
@@ -219,7 +224,7 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
             }
             break;
         case 'd':
-        if(moveLinkHelper(y+travelDistance, x, linkRef)) {
+            if(moveLinkHelper(y+travelDistance, x, linkRef)) {
                 return true;
             }
             break;
@@ -237,6 +242,9 @@ bool Game::moveLink(size_t x, size_t y, Link* linkRef, char direction) {
             cout << "INVALID MOVEMENT!" << endl;
             return false;
     }
+
+    // If we are here direction cell was out of bounds
+    // return invalid movement
     cout << "INVALID MOVEMENT!" << endl;
     return false;
 }
@@ -336,9 +344,9 @@ void Game::runCommand(string command) {
 }
 
 void Game::checkWin() {
-    int otherPlayerNum;
-    if (playerTurn == 0) otherPlayerNum = 1;
-    else otherPlayerNum = 0;
+    int otherPlayerNum = (playerTurn == 0) ? 1 : 0;
+
+    cout << "playerTurn" << playerTurn << endl;
 
     if (getPlayer(playerTurn).getNumOfDataDld() == 4 ||
             getPlayer(otherPlayerNum).getNumOfVirusDld() == 4) {
@@ -380,8 +388,9 @@ void Game::runGame() {
         }
 
         playerMovedLink = false;
-        if (playerTurn == 0) playerTurn = 1;
-        else if (playerTurn == 1) playerTurn = 0;
+        // cout << "CURRENT PLAYER " << playerTurn << endl;
+        // playerTurn = (playerTurn == 0) ? 1 : 0;
+        // cout << "SWITCHING PLAYERS TO " << playerTurn<< endl;
     }
 
 }
