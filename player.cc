@@ -5,13 +5,7 @@
 using namespace std;
 
 Player::Player(int number) : playerNum{number},downloadedData{0},downloadedViruses{0},availableAbilities{5} {
-
-    cout << "CREATING PLAYER " << number << endl;
-    // cout << "Number " << playerNum << endl;
-    // char base = 'a';
-    // setLink('V', 5 ,(base));
     playerNum = number;
-
     // Initiallize Links
 }
 

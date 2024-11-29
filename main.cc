@@ -165,10 +165,10 @@ int main(int argc, char* argv[])
 
     gridSetup(*g);
 
-    g->attach(new TextDisplay(*g));
-    // if (graphics) {
-    //     g->attach(new GraphicsDisplay(*g));
-    // }
+    g->attach(make_unique<TextDisplay>(*g));
+    if (graphics) {
+        g->attach(make_unique<GraphicsDisplay>(*g));
+    }
 
     g->runGame();
 

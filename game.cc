@@ -33,7 +33,6 @@ Game::Game() {
 
     players.emplace_back(unique_ptr<Player> {new Player(0)});
     players.emplace_back(unique_ptr<Player> {new Player(1)});
-    cout << "MAKING GAME" << endl;
  
     gameOver = false;
     playerTurn = 0;

@@ -15,7 +15,7 @@ SOURCES = $(wildcard *.cc abilities/*.cc)
 SOURCES := $(filter-out graphicsdisplay.cc window.cc, $(SOURCES))
 OBJECTS = ${SOURCES:.cc=.o}			# object files forming executable
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
-EXEC = RAIInet					# executable name
+EXEC = raiinet					# executable name
 
 ########## Targets ##########
 
