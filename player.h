@@ -49,6 +49,7 @@ public:
     //sets the link's type, strength, and symbol
     void setLink(char type, int strength, char symbol);
     // void setOpponent(Player& opp);
+    void reduceStunned();
 };
 
 #endif // PLAYER_H

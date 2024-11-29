@@ -8,7 +8,6 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "map": "cpp",
-        "stdexcept": "cpp",
         "__bit_reference": "cpp",
         "__split_buffer": "cpp",
         "type_traits": "cpp",
@@ -57,5 +56,6 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
+        "stdexcept": "cpp"
     }
 }

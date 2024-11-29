@@ -104,17 +104,20 @@ bool Player::addAbility(char c) {
             abilities.push_back(std::move(newAbility));
             break;
         case 'X': // Steal not implemented
-            return false;
+            throw invalid_argument("Steal not implemented");
             newAbility = unique_ptr<Ability>(new Steal(*this));
             abilities.push_back(std::move(newAbility));
             break;
         case 'C': // Stun not implemented
-            return false;
             newAbility = unique_ptr<Ability>(new Stun(*this));
             abilities.push_back(std::move(newAbility));
             break;
         case 'W': 
             newAbility = unique_ptr<Ability>(new Weaken(*this));
+            abilities.push_back(std::move(newAbility));
+            break;
+        case 'M':
+            newAbility = unique_ptr<Ability>(new Murder(*this));
             abilities.push_back(std::move(newAbility));
             break;
         default:
@@ -123,3 +126,8 @@ bool Player::addAbility(char c) {
     return true;
 }
 
+void Player::reduceStunned() {
+    for (auto& link : links) {
+        link->reduceStunned();
+    }
+}

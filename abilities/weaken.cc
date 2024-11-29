@@ -13,8 +13,9 @@ bool Weaken::Effect(Cell& target, bool debug) {
         if (debug) cout << "TARGET HAS NO LINK OR IS OWNED BY THE CASTER!" << endl;
         return false;
     }
-    int random = rand() % 4 + 1;
+    int random = (rand() % 4) + 1;
+    target.link->setStunned(1);
     // do we want to reveal the link to the Game or the player?
-    target.link->weaken(random);
+    target.link->weaken(3);
     return true;
 }

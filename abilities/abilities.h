@@ -6,3 +6,4 @@
 #include "steal.h"
 #include "stun.h"
 #include "weaken.h"
+#include "murder.h"
