@@ -7,9 +7,10 @@ using namespace std;
 
 
 class Download: public Ability {
-    bool Effect(Cell& target) override;
+    bool Effect(Cell& target, bool debug=false) override;
 public:
     Download(Player& caster);
+    ~Download() override = default;
 };
 
 #endif

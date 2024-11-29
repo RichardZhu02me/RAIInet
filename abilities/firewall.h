@@ -7,8 +7,9 @@ using namespace std;
 
 
 class Firewall: public Ability {
-    bool Effect(Cell& target) override;
+    bool Effect(Cell& target, bool debug=false) override;
 public:
     Firewall(Player& caster);
+    ~Firewall() override = default;
 };
 #endif

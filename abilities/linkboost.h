@@ -6,9 +6,11 @@
 using namespace std;
 
 class LinkBoost: public Ability {
-    bool Effect(Cell& target) override;
+protected:
+    bool Effect(Cell& target, bool debug=false) override;
 public:
     LinkBoost(Player& caster);
+    ~LinkBoost() override = default;
 };
 
 #endif

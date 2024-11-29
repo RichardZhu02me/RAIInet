@@ -7,9 +7,10 @@ Weaken::Weaken(Player& caster)
     name = "Weaken";
 }
 
-bool Weaken::Effect(Cell& target) {
+bool Weaken::Effect(Cell& target, bool debug) {
     //if there is no link or the link is owned by the player return false
     if (target.link == nullptr || target.link->getOwnerId() == getCaster().getPlayerNum()) {
+        if (debug) cout << "TARGET HAS NO LINK OR IS OWNED BY THE CASTER!" << endl;
         return false;
     }
     int random = rand() % 4 + 1;

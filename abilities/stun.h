@@ -6,9 +6,10 @@
 using namespace std;
 
 class Stun: public Ability {
-    bool Effect(Cell& target) override;
+    bool Effect(Cell& target, bool debug=false) override;
 public:
     Stun(Player& caster);
+    ~Stun() override = default;
 };
 
 #endif

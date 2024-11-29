@@ -6,9 +6,10 @@
 using namespace std;
 
 class Steal: public Ability {
-    bool Effect(Cell& target) override;
-public:
+    bool Effect(Cell& target, bool debug=false) override;
+public: 
     Steal(Player& caster);
+    ~Steal() override = default;
 };
 
 #endif

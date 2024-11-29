@@ -7,8 +7,9 @@ Stun::Stun(Player& caster)
     name = "Stun";
 }
 
-bool Stun::Effect(Cell& target) {
+bool Stun::Effect(Cell& target, bool debug) {
     if (target.link == nullptr || target.link->getOwnerId() == getCaster().getPlayerNum()) {
+        if (debug) cout << "TARGET HAS NO LINK OR IS OWNED BY THE CASTER!" << endl;
         return false;
     }
     // TODO: Implement stun effect

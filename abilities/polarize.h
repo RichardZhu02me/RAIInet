@@ -7,9 +7,10 @@
 using namespace std;
 
 class Polarize: public Ability {
-    bool Effect(Cell& target) override;
+    bool Effect(Cell& target, bool debug=false) override;
 public:
     Polarize(Player& caster);   
+    ~Polarize() override = default;
 };
 
 #endif

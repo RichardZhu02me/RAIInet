@@ -89,10 +89,8 @@ char Game::getState(size_t row, size_t col) const {
 bool Game::castAbility(int index, Cell& target) {
     //check if current player has the ability
     Ability& a = getPlayer(playerTurn).getAbility(index);
-    if(a.getAvailable()) {
-        if (a.cast(target)) {
-            return true;
-        }
+    if (a.cast(target)) {
+        return true;
     }
     return false;
 }
@@ -308,27 +306,46 @@ void Game::runCommand(string command) {
             Game::endTurn();
         }
     } 
-    else if(action == "ability" && !playerCastedAbility) {
+    else if(action == "ability") {
+        if (playerCastedAbility) {
+            cout << "ABILITY ALREADY CASTED THIS TURN!" << endl;
+            return;
+        }
         int abilityNum;
-        ss >> abilityNum;
+        if (!(ss >> abilityNum)) {
+            cout << "INVALID ABILITY NUMBER!" << endl;
+            return;
+        }
+        abilityNum--;
         Ability &a = getPlayer(playerTurn).getAbility(abilityNum);
         string abilityName = a.getName();
         size_t x, y;
-        if (abilityName == "linkboost" || abilityName == "download" ||
-                abilityName == "polarize" || abilityName == "scan") {
+        if (abilityName == "Link Boost" || abilityName == "Download" ||
+                abilityName == "Polarize" || abilityName == "Scan") {
             string link;
             char linkChar;
-            ss >> link;
+            if (!(ss >> link)) {
+                cout << "INVALID CELL!" << endl;
+                return;
+            }
             linkChar = link[0];
-            Link linkRef = getLink(linkChar);
+            Link& linkRef = getLink(linkChar);
             x = linkRef.getX();
             y = linkRef.getY();
-        } else if (abilityName == "firewall") {
+            cout << "CASTING ABILITY " << abilityName << " ON LINK " << linkChar << endl;
+        } else if (abilityName == "Firewall") {
             ss >> x >> y;
+            cout << "CASTING ABILITY " << abilityName << " ON CELL " << x << " " << y << endl;
         }
-        if (castAbility(abilityNum,getCell(x, y))) {
+        else {
+            cout << "INVALID ABILITY!" << endl;
+            return;
+        }
+        if (castAbility(abilityNum,getCell(y, x))) {
             playerCastedAbility = true;
+            cout << "ABILITY CAST SUCCESSFUL" << endl;
         }
+
     } else if(action == "abilities") {
         displayAbilities(playerTurn);
     } else if(action == "board") {
